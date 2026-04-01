@@ -1,0 +1,64 @@
+.stack {
+  /* flex: 1; */
+  min-height: 640px;
+  max-height: 640px;
+  min-width: 200px;
+  padding: 6px 8px;
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #00000055;
+}
+.title {
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  border-bottom: 1px solid #7c7b7b;
+}
+.listItemField {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.listItem {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: #e5e5e5;
+  border: 1px solid #706f6f;
+  border-radius: 12px;
+  overflow: hidden;
+  max-height: 260px;
+  height: 260px;
+}
+.labelName {
+  font-size: 18px;
+  font-weight: 500;
+  text-align: center;
+  color: #fff;
+}
+.vacantName {
+  background: #348d2a;
+}
+.closedName {
+  background: #000;
+}
+.item {
+  display: grid;
+  gap: 4px;
+  padding: 0 4px;
+  overflow: auto;
+  /* border: 1px solid #ce1111; */
+}
+.button {
+  border: 1px solid #706f6f;
+  background: #fff;
+  border-radius: 12px;
+}
+.button:hover {
+  background: rgb(109, 59, 218);
+  color: #fff;
+}
+.active {
+  background: rgb(109, 59, 218);
+  color: #fff;
+}

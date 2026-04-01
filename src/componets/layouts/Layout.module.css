@@ -1,0 +1,25 @@
+.root {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.flexContent {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
+
+.mainContent {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  background: #e5e5e5;
+  transition: all 0.25s ease;
+  overflow: hidden;
+}
+
+.mainExpandet {
+  flex: 1;
+}

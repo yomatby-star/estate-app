@@ -1,0 +1,12 @@
+.inner {
+  height: 100%;
+  display: flex;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.mainContents {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}

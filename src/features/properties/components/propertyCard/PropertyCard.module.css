@@ -1,0 +1,97 @@
+.mainCardField {
+  padding: 6px 12px
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #5f5f60;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 12px 12px 0 0;
+}
+
+.filteredButtonField {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filterButton {
+  border-radius: 12px;
+  padding: 2px 8px;
+  border: none;
+}
+.filterButton:hover {
+  transform: translateY(-3px);
+}
+.active {
+  background: rgb(93, 58, 236);
+  color: #fff;
+  border: 1px solid #fff;
+}
+
+.mainContentField {
+  display: grid;
+  gap: 6px;
+  background: transparent;
+  max-height: 540px;
+  overflow-y: auto;
+}
+
+.empty {
+  color: red;
+  background: #fff;
+  width: 100%;
+  padding: 6px 12px;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  border: none;
+  padding: 8px;
+  background: #fff;
+}
+
+.image {
+  width: 200px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.baseField {
+  display: grid;
+  gap: 6px;
+  text-align: left;
+}
+
+.nameTitle {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  gap: 12px;
+  background: #5f5f60;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 0 0 12px 12px;
+}
+
+.nextButton {
+  border: none;
+  border-radius: 10px;
+  padding: 2px 12px;
+}
+.nextButton:hover {
+  transform: translateY(-2px);
+}

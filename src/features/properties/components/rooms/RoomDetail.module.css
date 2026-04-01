@@ -1,0 +1,93 @@
+.stack {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  height: 100%;
+  background: #fff;
+  border: 1px solid #00000055;
+  border-radius: 12px;
+  padding: 8px 16px;
+}
+.basicHead {
+  border-bottom: 1px solid #4f4e4e;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 8px;
+}
+.cardTitle {
+  font-size: 16px;
+  font-weight: 600;
+}
+.statusField {
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 12px;
+  width: 100px;
+  text-align: center;
+}
+.vacantStyle {
+  background: #348d2a;
+}
+.closedStyle {
+  background: #2b2c2b;
+}
+.basic {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 12px;
+}
+.basicLabel {
+  font-size: 16px;
+  background: #e5e5e5;
+  border: 1px solid #969191;
+  padding: 2px 8px;
+  border-radius: 12px;
+  /* border: 1px solid #6d6c6c; */
+  width: 90px;
+}
+.basicValue {
+  font-size: 16px;
+  border-bottom: 1px solid #9c9b9b;
+}
+
+
+.equipmentItemField {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  overflow: auto;
+  max-height: 140px;
+}
+.equipmentItem {
+  font-size: 14px;
+  border: 1px solid #969191;
+  background: #e5e5e5;
+  padding: 4px 8px;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+
+.conditionsField {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  /* border: 1px solid #000; */
+}
+
+.registerButton {
+  background: rgb(59, 68, 199);
+  color: #fff;
+  border-radius: 12px;
+  font-size: 18px;
+}
+.registerButton:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.9);
+}

@@ -1,0 +1,39 @@
+.titleInputField {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background: #fff;
+  border: 1px solid #00000076;
+  padding: 6px 12px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.inputField {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.input {
+  width: 280px;
+  border-radius: 12px;
+  padding: 4px 12px;
+  border: 1px solid #9a9898;
+}
+
+.searchButton {
+  border-radius: 12px;
+  padding: 4px 12px;
+  border: 1px solid #9a9898;
+  background: rgb(127, 88, 178);
+  color: #fff;
+}
+.searchButton:hover {
+  transform: translateY(-3px);
+}
