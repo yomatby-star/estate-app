@@ -1,13 +1,14 @@
 import { NavLink } from "react-router-dom";
 import { NAVE_ITEMS } from "../../routes/rouets";
 import styles from "./Sidebar.module.css"
+import { useAuth } from "../../contexts/AuthContext";
 
 type Props = {
   isOpen: boolean;
 }
 
 export default function Sidebar({ isOpen }: Props) {
-
+  const { logout } = useAuth()
   return (
     <aside className={`${styles.sidebar} ${isOpen ? styles.closed: ""}`}>
       <nav className={styles.navItemsField}>
@@ -26,7 +27,7 @@ export default function Sidebar({ isOpen }: Props) {
           </NavLink>
         ))}
       </nav>
-      <button className={styles.logOutButton}>ログアウト</button>
+      <button className={styles.logOutButton} onClick={logout}>ログアウト</button>
     </aside>
   )
 }

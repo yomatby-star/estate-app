@@ -9,12 +9,23 @@ import PropertyListPage from './pages/propertyListPage/PropertyListPage'
 import PropertyDetailLayout from './pages/propertyDetailLayout/PropertyDetailLayout'
 import RoomDetailPage from './pages/roomDetailPage/RoomDetailPage'
 import PropertyTenantPage from './pages/propertyTenant/PropertyTenantPage'
+import LoginPage from './pages/loginPage/LoginPage'
+import RequireAuth from './componets/requireAuth/RequireAuth'
+
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<Layout />}>
+        <Route path='/login' element={<LoginPage />} />
+        <Route 
+          path='/' 
+          element={
+            <RequireAuth>
+              <Layout />
+            </RequireAuth>
+          }
+        >
           <Route index element={<Navigate to={ROUTES.property} replace />}/>
           <Route path={ROUTES.property} element={<PropertyPage />}>
             <Route index element={<PropertyListPage />}/>
