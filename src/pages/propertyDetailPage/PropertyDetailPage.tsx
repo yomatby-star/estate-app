@@ -4,27 +4,33 @@ import { useState } from "react"
 import type { Property } from "../../mocks/properties/mock"
 
 type OutletContext = {
-  property: Property
+  property: Property | undefined,
+  isEditMode: boolean,
 }
 
 export default function PropertyDetailPage() {
   const [i, setI] = useState(0)
-  const { property } = useOutletContext<OutletContext>()
-
+  const { property, isEditMode } = useOutletContext<OutletContext>()
   if (!property) {
     return <div>該当する物件がありません</div>
   }
+  const [form, setForm] = useState({
+    name: property?.basic.name,
+    addr: property?.basic.addr,
+    structure: property?.common.structure,
+    mansionType: property?.common.mansionType,
+    local: property?.common.local,
+    station: property?.common.station,
+  })
 
-  const basicRow = {
-    name: property.basic.name,
-  }
   const commonRow = [
-    {label: "住所", value: property.basic.addr},
-    {label: "構造", value: property.common.structure},
-    {label: "種別", value: property.common.mansionType},
-    {label: "路線", value:property.common.local},
-    {label: "駅名", value: property.common.station},
-  ]
+    {label: "住所", key: "addr", value: form.addr},
+    {label: "構造", key: "structure" ,value: form.structure},
+    {label: "種別", key: "mansionType" ,value: form.mansionType},
+    {label: "路線", key: "local" ,value:form.local},
+    {label: "駅名", key: "station" ,value: form.station},
+  ] as const
+
   const commonSecRow = [
     {label: "築年数", value: property.common.year},
     {label: "階数", value: property.common.floors},
@@ -52,13 +58,32 @@ export default function PropertyDetailPage() {
       <div className={styles.leftContent}>
         <div className={styles.card}>
           <div className={styles.buildingNameField}>
-            <h2 className={styles.buildingName}>{basicRow.name}</h2>
+            {isEditMode ? (
+              <input 
+                value={form.name}
+                onChange={(e) => setForm((prev) => ({
+                  ...prev,
+                  name: e.target.value
+                }))}
+              />
+            ) : <h2 className={styles.buildingName}>{form.name}</h2>}
           </div>
-        
-          {commonRow.map(({label, value}) => (
+
+          {commonRow.map(({label, key, value}) => (
             <div key={label} className={styles.labelVal}>
               <div className={styles.labelTitle}>{label}</div>
-              <div className={styles.valueContent}>{value}</div>
+              <div className={styles.valueContent}>
+                {isEditMode ? (
+                  <input
+                    className={styles.editInput}
+                    value={value ?? ""}
+                    onChange={(e) => setForm((prev) => ({
+                      ...prev,
+                      [key]: e.target.value
+                    }))}
+                  />
+                ) : value}
+              </div>
             </div>
           ))}
         </div>
