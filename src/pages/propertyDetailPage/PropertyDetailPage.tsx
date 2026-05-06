@@ -1,6 +1,6 @@
 import { useOutletContext } from "react-router-dom"
 import styles from "./PropertyDetailPage.module.css"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import type { Property } from "../../mocks/properties/mock"
 
 type OutletContext = {
@@ -11,17 +11,32 @@ type OutletContext = {
 export default function PropertyDetailPage() {
   const [i, setI] = useState(0)
   const { property, isEditMode } = useOutletContext<OutletContext>()
+
   if (!property) {
     return <div>該当する物件がありません</div>
   }
-  const [form, setForm] = useState({
-    name: property?.basic.name,
-    addr: property?.basic.addr,
-    structure: property?.common.structure,
-    mansionType: property?.common.mansionType,
-    local: property?.common.local,
-    station: property?.common.station,
-  })
+
+  const defaultForm = {
+    name: property?.basic.name ?? "",
+    addr: property?.basic.addr ?? "",
+    structure: property?.common.structure ?? "",
+    mansionType: property?.common.mansionType ?? "",
+    local: property?.common.local ?? "",
+    station: property?.common.station ?? "",
+    year: property?.common.year ?? "",
+    floors: property?.common.floors ?? "",
+    autoLock: property?.common.autoLock ?? "",
+    gas: property?.common.gas ?? "",
+    garbage: property?.common.garbage ?? "",
+  }
+
+  const [form, setForm] = useState(defaultForm)
+  
+  useEffect(() => {
+    if(!isEditMode) {
+      setForm(defaultForm)
+    }
+  }, [isEditMode])
 
   const commonRow = [
     {label: "住所", key: "addr", value: form.addr},
@@ -32,12 +47,13 @@ export default function PropertyDetailPage() {
   ] as const
 
   const commonSecRow = [
-    {label: "築年数", value: property.common.year},
-    {label: "階数", value: property.common.floors},
-    {label: "オートロック", value: property.common.autoLock},
-    {label: "ガス", value: property.common.gas},
-    {label: "ゴミ置き場", value: property.common.garbage},
-  ]
+    {label: "築年数", key: "year", value: form.year},
+    {label: "階数", key: "floors", value: form.floors},
+    {label: "オートロック", key: "autoLock", value: form.autoLock},
+    {label: "ガス", key: "gas", value: form.gas},
+    {label: "ゴミ置き場", key: "garbage", value: form.garbage},
+  ] as const
+
   const vacantRoomStatus = property.roomStatus.filter((r) => r.status === "vacant")
   const closedRoomStatus = property.roomStatus.filter((r) => r.status === "closed")
 
@@ -54,7 +70,6 @@ export default function PropertyDetailPage() {
 
   return (
     <div className={styles.stack}>
-      {/* 左側 */}
       <div className={styles.leftContent}>
         <div className={styles.card}>
           <div className={styles.buildingNameField}>
@@ -87,11 +102,23 @@ export default function PropertyDetailPage() {
             </div>
           ))}
         </div>
+
         <div className={styles.card}>
-          {commonSecRow.map(({label, value}) => (
+          {commonSecRow.map(({label, key, value}) => (
             <div key={label} className={styles.labelVal}>
               <div className={styles.labelTitle}>{label}</div>
-              <div className={styles.valueContent}>{value}</div>
+              <div className={styles.valueContent}>
+                {isEditMode ? (
+                  <input
+                    className={styles.editInput}
+                    value={value ?? ""}
+                    onChange={(e) => setForm((prev) => ({
+                      ...prev,
+                      [key]: e.target.value
+                    }))}
+                  />
+                ) : value}
+              </div>
             </div>
           ))}
         </div>
@@ -119,7 +146,6 @@ export default function PropertyDetailPage() {
         </div>
       </div>
 
-      {/* 右側 */}
       <div className={styles.rightContent}>
         <div className={styles.card}>
           {hasImage ? (
