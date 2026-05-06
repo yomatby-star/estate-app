@@ -21,6 +21,11 @@ export default function PropertyDetailPage() {
     mansionType: property?.common.mansionType,
     local: property?.common.local,
     station: property?.common.station,
+    year: property?.common.year,
+    floors: property?.common.floors,
+    autoLock: property?.common.autoLock,
+    gas: property?.common.gas,
+    garbage: property?.common.garbage,
   })
 
   const commonRow = [
@@ -32,12 +37,13 @@ export default function PropertyDetailPage() {
   ] as const
 
   const commonSecRow = [
-    {label: "築年数", value: property.common.year},
-    {label: "階数", value: property.common.floors},
-    {label: "オートロック", value: property.common.autoLock},
-    {label: "ガス", value: property.common.gas},
-    {label: "ゴミ置き場", value: property.common.garbage},
-  ]
+    {label: "築年数", key: "year", value: form.year},
+    {label: "階数", key: "floors", value: form.floors},
+    {label: "オートロック", key: "autoLock", value: form.autoLock},
+    {label: "ガス", key: "gas", value: form.gas},
+    {label: "ゴミ置き場", key: "garbage", value: form.garbage},
+  ] as const
+
   const vacantRoomStatus = property.roomStatus.filter((r) => r.status === "vacant")
   const closedRoomStatus = property.roomStatus.filter((r) => r.status === "closed")
 
@@ -87,11 +93,23 @@ export default function PropertyDetailPage() {
             </div>
           ))}
         </div>
+
         <div className={styles.card}>
-          {commonSecRow.map(({label, value}) => (
+          {commonSecRow.map(({label, key, value}) => (
             <div key={label} className={styles.labelVal}>
               <div className={styles.labelTitle}>{label}</div>
-              <div className={styles.valueContent}>{value}</div>
+              <div className={styles.valueContent}>
+                {isEditMode ? (
+                  <input
+                    className={styles.editInput}
+                    value={value ?? ""}
+                    onChange={(e) => setForm((prev) => ({
+                      ...prev,
+                      [key]: e.target.value
+                    }))}
+                  />
+                ) : value}
+              </div>
             </div>
           ))}
         </div>
