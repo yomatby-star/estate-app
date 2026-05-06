@@ -1,5 +1,6 @@
 import styles from "./HeaderMenu.module.css"
 import { Bell, MessageCircle, User, Menu } from "lucide-react"
+import UserInfo from "./UserInfo";
 
 type Props = {
   title: string;
@@ -61,6 +62,7 @@ export default function HeaderMenu({ title, onToggleSidebaer }: Props) {
             {mockIcons.user}
           </div>
         </button>
+        <UserInfo />
       </div>
     </div>
   )
