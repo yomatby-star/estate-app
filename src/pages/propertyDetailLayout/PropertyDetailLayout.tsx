@@ -8,12 +8,26 @@ export default function PropertyDetailLayout() {
   const { id } = useParams()
   const property = mockProperties.find((p) => p.id === id)
   const [isEditMode, setIsEditMode] = useState(false)
-
   const tabItems = [
     { label: "物件詳細", to: `${ROUTES.property}/${id}`  },
     { label: "部屋詳細", to: `${ROUTES.property}/${id}/${PROPERTY_NAV.room}` },
     { label: "入居者", to: `${ROUTES.property}/${id}/${PROPERTY_NAV.tenant}` },
   ]
+  const editButtons = isEditMode ? (
+    <>
+      <button type="button" className={styles.navItem} onClick={() => setIsEditMode(false)}>
+        閉じる
+      </button>
+      <button type="button" className={styles.navItem}>
+        保存
+      </button>
+    </>
+  ) : (
+    <button type="button" className={styles.navItem} onClick={() => setIsEditMode(true)}>
+      編集
+    </button>
+  )
+
   return (
     <div className={styles.stack}>
       <div className={styles.tabField}>
@@ -30,19 +44,15 @@ export default function PropertyDetailLayout() {
               {label}
             </NavLink>
           ))}
-          <button 
-            type="button" 
-            className={`${styles.navItem} ${styles.edits}`}
-            onClick={() => setIsEditMode((prev) => !prev)}
-          >
-            {isEditMode ? "観覧" : "編集"}
-          </button>
+          <div className={styles.edits}>
+            {editButtons}
+          </div>
         </nav>
       </div>
 
       <div className={styles.outletArea}>
         <Outlet context={{ property, isEditMode }} />
-      </div>`
+      </div>
     </div>
   )
 }
