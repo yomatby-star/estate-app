@@ -11,6 +11,7 @@ import RoomDetailPage from './pages/roomDetailPage/RoomDetailPage'
 import PropertyTenantPage from './pages/propertyTenant/PropertyTenantPage'
 import LoginPage from './pages/loginPage/LoginPage'
 import RequireAuth from './componets/requireAuth/RequireAuth'
+import RegisterPage from './pages/registerPage/registerPage'
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
           }
         >
           <Route index element={<Navigate to={ROUTES.property} replace />}/>
+          <Route path={ROUTES.register} element={<RegisterPage />}/>
           <Route path={ROUTES.property} element={<PropertyPage />}>
             <Route index element={<PropertyListPage />}/>
             <Route path=":id" element={<PropertyDetailLayout/>}>
