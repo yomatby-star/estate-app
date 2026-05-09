@@ -12,7 +12,14 @@ export const NAVE_ITEMS = [
   { path: ROUTES.tenants, label: "入居者", icon: User },
 ] as const
 
+export const REGISTER_NAV = {
+  building: "building",
+  room: "room",
+  owner: "owner",
+} as const
+
 export const PROPERTY_NAV = {
   room: "room",
   tenant: "tenant"
-}
+} as const
+

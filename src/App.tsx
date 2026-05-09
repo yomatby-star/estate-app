@@ -2,7 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import PropertyPage from './pages/propertyPage/PropertyPage'
 import Layout from './componets/layouts/Layout'
 import './App.css'
-import { PROPERTY_NAV, ROUTES } from './routes/rouets'
+import { PROPERTY_NAV, REGISTER_NAV, ROUTES } from './routes/rouets'
 import TenantsPage from './pages/tenantsPage/TenantsPage'
 import PropertyDetailPage from './pages/propertyDetailPage/PropertyDetailPage'
 import PropertyListPage from './pages/propertyListPage/PropertyListPage'
@@ -12,12 +12,17 @@ import PropertyTenantPage from './pages/propertyTenant/PropertyTenantPage'
 import LoginPage from './pages/loginPage/LoginPage'
 import RequireAuth from './componets/requireAuth/RequireAuth'
 import RegisterPage from './pages/registerPage/registerPage'
+import BuildingRegisterPage from './pages/registerPage/buildingRegisterPage/BuildingRegisterPage'
+import RoomRegisterPage from './pages/registerPage/roomRegisterPage/RoomRegisterPage'
+import OwnerRegisterPage from './pages/registerPage/ownerRegisterPage/OwnerRegisterPage'
+
 
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        
         <Route path='/login' element={<LoginPage />} />
         <Route 
           path='/' 
@@ -28,7 +33,12 @@ function App() {
           }
         >
           <Route index element={<Navigate to={ROUTES.property} replace />}/>
-          <Route path={ROUTES.register} element={<RegisterPage />}/>
+          <Route path={ROUTES.register} element={<RegisterPage />}>
+            <Route index element={<Navigate to={REGISTER_NAV.building} replace />} />
+            <Route path={REGISTER_NAV.building} element={<BuildingRegisterPage />}/>
+            <Route path={REGISTER_NAV.room} element={<RoomRegisterPage />}/>
+            <Route path={REGISTER_NAV.owner} element={<OwnerRegisterPage />}/>
+          </Route>
           <Route path={ROUTES.property} element={<PropertyPage />}>
             <Route index element={<PropertyListPage />}/>
             <Route path=":id" element={<PropertyDetailLayout/>}>
@@ -39,6 +49,7 @@ function App() {
           </Route>
           <Route path={ROUTES.tenants} element={<TenantsPage />}/>
         </Route>
+      
       </Routes>
     </BrowserRouter>
   )

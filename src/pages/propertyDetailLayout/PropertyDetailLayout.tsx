@@ -9,9 +9,9 @@ export default function PropertyDetailLayout() {
   const property = mockProperties.find((p) => p.id === id)
   const [isEditMode, setIsEditMode] = useState(false)
   const tabItems = [
-    { label: "物件詳細", to: `${ROUTES.property}/${id}`  },
-    { label: "部屋詳細", to: `${ROUTES.property}/${id}/${PROPERTY_NAV.room}` },
-    { label: "入居者", to: `${ROUTES.property}/${id}/${PROPERTY_NAV.tenant}` },
+    { label: "物件詳細", to: `${ROUTES.property}/${id}`},
+    { label: "部屋詳細", to: `${ROUTES.property}/${id}/${PROPERTY_NAV.room}`},
+    { label: "入居者", to: `${ROUTES.property}/${id}/${PROPERTY_NAV.tenant}`},
   ]
   const editButtons = isEditMode ? (
     <>
