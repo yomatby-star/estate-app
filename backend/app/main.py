@@ -2,6 +2,7 @@ from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.firebase_admin import initialize_firebase_admin
 from app.dependencies.auth import get_current_user
+from app.routers.properties import buildingRegister
 
 app = FastAPI()
 
@@ -25,3 +26,5 @@ def read_me(current_user: dict = Depends(get_current_user)):
     "message": "authenticated",
     "user": current_user,
   }
+
+app.include_router(buildingRegister.router)
