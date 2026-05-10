@@ -1,5 +1,6 @@
 import { authFetch } from "../../../api/authFetch"
 import { useState } from "react"
+import styles from "./BuildingRegisterPage.module.css"
 
 
 export default function BuildingRegisterPage() {
@@ -10,12 +11,28 @@ export default function BuildingRegisterPage() {
     { label: "物件名", key: "buildingName" },
     { label: "住所", key: "buildingAddr" },
     { label: "構造", key: "buildingStructure" },
+    { label: "種別", key: "buildingMansionType" },
+    { label: "路線", key: "buildingLocal" },
+    { label: "駅名", key: "buildingStation" },
+    { label: "築年", key: "buildingYear" },
+    { label: "階数", key: "buildingFloors" },
+    { label: "オートロック", key: "buildingAutoLock" },
+    { label: "ガス", key: "buildingGas" },
+    { label: "ゴミ置場", key: "buildingGarbage" },
   ] as const
 
   const [form, setForm] = useState({
     buildingName: "",
     buildingAddr: "",
     buildingStructure: "",
+    buildingMansionType: "",
+    buildingLocal: "",
+    buildingStation: "",
+    buildingYear: "",
+    buildingFloors: "",
+    buildingAutoLock: "",
+    buildingGas: "",
+    buildingGarbage: "",
   })
 
   const onSave = async () => {
@@ -25,15 +42,15 @@ export default function BuildingRegisterPage() {
       },
       common: {
         addr: form.buildingAddr,
-        structure: form.buildingStructure
-        // mansionType: "",
-        // local: "",
-        // station: "",
-        // year: "",
-        // floors: "",
-        // autoLock: "",
-        // gas: "",
-        // garbage: ""
+        structure: form.buildingStructure,
+        mansionType: form.buildingMansionType,
+        local: form.buildingLocal,
+        station: form.buildingStation,
+        year: Number(form.buildingYear),
+        floors: Number(form.buildingFloors),
+        autoLock: form.buildingAutoLock,
+        gas: form.buildingGas,
+        garbage: form.buildingGarbage
       }
     }
 
@@ -58,11 +75,12 @@ export default function BuildingRegisterPage() {
   }
 
   return (
-    <div>
-      <div>
+    <div className={styles.stack}>
+      <div className={styles.card}>
+        <strong className={styles.title}>物件登録</strong>
         {INPUT_ITEMS.map(({ label, key }) => 
-          <div key={key}>
-            <span>{label}</span>
+          <div key={key} className={styles.inputField}>
+            <span className={styles.labelTitle}>{label}</span>
             <input
               value={form[key]}
               onChange={(e) => 
@@ -75,6 +93,10 @@ export default function BuildingRegisterPage() {
           </div>
         )}
         <button type="button" onClick={onSave}>保存</button>
+      </div>
+      <div className={styles.card}>
+        <div>写真</div>
+        <div>その他</div>
       </div>
     </div>
   )
