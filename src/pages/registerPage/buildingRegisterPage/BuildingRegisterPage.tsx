@@ -1,11 +1,8 @@
 import { authFetch } from "../../../api/authFetch"
-import { useAuth } from "../../../contexts/AuthContext"
 import { useState } from "react"
 
 
 export default function BuildingRegisterPage() {
-  const { user } = useAuth()
-
   const ENDPOINT_URL = "http://127.0.0.1:8000"
   const PATH = "/api/v1/buildingRegister"
 
