@@ -1,6 +1,8 @@
 .route {
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  height: 100vh;
+  height: 100%;
 }
 .navField {
   display: flex;
@@ -26,4 +28,8 @@
 .active {
   background: rgb(109, 59, 218);
   color: #fff;
+}
+.outlet {
+  flex: 1;
+  padding: 8px 12px;
 }

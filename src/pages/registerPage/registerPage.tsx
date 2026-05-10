@@ -23,7 +23,7 @@ export default function registerPage() {
           </NavLink>
         ))}
       </nav>
-      <div>
+      <div className={styles.outlet}>
         <Outlet />
       </div>
     </div>
