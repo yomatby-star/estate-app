@@ -6,14 +6,14 @@ class PropertyBasic(BaseModel):
 class PropertyCommon(BaseModel):
   addr: str = Field(..., min_length=1)
   structure: str = ""
-  # mansionType: str = ""
-  # local: str = ""
-  # station: str = ""
-  # year: int
-  # floors: int
-  # autoLock: bool
-  # gas: str = ""
-  # garbage: str = ""
+  mansionType: str = ""
+  local: str = ""
+  station: str = ""
+  year: int
+  floors: int
+  autoLock: str = ""
+  gas: str = ""
+  garbage: str = ""
 
 class PropertyCreateRequest(BaseModel):
   basic: PropertyBasic
