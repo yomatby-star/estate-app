@@ -9,7 +9,7 @@ def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(securit
     raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="invalid authenttication scheme",)
 
   token = credentials.credentials
-  print("token", token)
+  # print("token", token)
 
   try: 
     decoded_token = auth.verify_id_token(token)
