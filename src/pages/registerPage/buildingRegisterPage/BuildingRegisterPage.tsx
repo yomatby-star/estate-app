@@ -8,17 +8,17 @@ export default function BuildingRegisterPage() {
   const PATH = "/api/v1/buildingRegister"
 
   const INPUT_ITEMS = [
-    { label: "物件名", key: "buildingName" },
-    { label: "住所", key: "buildingAddr" },
-    { label: "構造", key: "buildingStructure" },
-    { label: "種別", key: "buildingMansionType" },
-    { label: "路線", key: "buildingLocal" },
-    { label: "駅名", key: "buildingStation" },
-    { label: "築年", key: "buildingYear" },
-    { label: "階数", key: "buildingFloors" },
-    { label: "オートロック", key: "buildingAutoLock" },
-    { label: "ガス", key: "buildingGas" },
-    { label: "ゴミ置場", key: "buildingGarbage" },
+    { label: "物件名", key: "buildingName", required: true },
+    { label: "住所", key: "buildingAddr", required: true },
+    { label: "構造", key: "buildingStructure", required: false },
+    { label: "種別", key: "buildingMansionType", required: false },
+    { label: "路線", key: "buildingLocal", required: false },
+    { label: "駅名", key: "buildingStation", required: false },
+    { label: "築年", key: "buildingYear", required: false },
+    { label: "階数", key: "buildingFloors", required: false },
+    { label: "オートロック", key: "buildingAutoLock", required: false },
+    { label: "ガス", key: "buildingGas", required: false },
+    { label: "ゴミ置場", key: "buildingGarbage", required: false },
   ] as const
 
   const [form, setForm] = useState({
@@ -36,6 +36,16 @@ export default function BuildingRegisterPage() {
   })
 
   const onSave = async () => {
+    if(!form.buildingName.trim()) {
+      alert("物件名を入力してください")
+      return
+    }
+
+    if(!form.buildingAddr.trim()) {
+      alert("住所を入力してください")
+      return
+    }
+
     const body = {
       basic: {
         name: form.buildingName
@@ -78,10 +88,13 @@ export default function BuildingRegisterPage() {
     <div className={styles.stack}>
       <div className={styles.card}>
         <strong className={styles.title}>物件登録</strong>
-        {INPUT_ITEMS.map(({ label, key }) => 
+        {INPUT_ITEMS.map(({ label, key, required }) => 
           <div key={key} className={styles.inputField}>
-            <span className={styles.labelTitle}>{label}</span>
+            <span className={styles.labelTitle}>
+              {label}{required && " *"}
+            </span>
             <input
+              required={required}
               value={form[key]}
               onChange={(e) => 
                 setForm((prev) => ({
