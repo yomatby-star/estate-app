@@ -6,17 +6,17 @@ type RequestOptions = RequestInit & {
 
 export async function authFetch(url: string, options: RequestOptions = {}) {
   const user = auth.currentUser
-  console.log("user", user)
+  // console.log("user", user)
 
   if (!user) {
     throw new Error("未ログインです")
   }
 
   const idToken = await user.getIdToken()
-  console.log("idToken", idToken)
+  // console.log("idToken", idToken)
 
   const headers = new Headers(options.headers) 
-  console.log("headers", headers)
+  // console.log("headers", headers)
 
   headers.set("Authorization", `Bearer ${idToken}`)
 
@@ -24,7 +24,7 @@ export async function authFetch(url: string, options: RequestOptions = {}) {
     ...options,
     headers,
   })
-  console.log("response", response)
+  // console.log("response", response)
 
   if (response.status === 401) {
     throw new Error("承認エラーです")
