@@ -37,6 +37,7 @@ export default function BuildingRegisterPage() {
 
   const [form, setForm] = useState(initialForm)
   const [isSaving, setIsSaving] = useState(false)
+  const [imageFile, setImageFile] = useState<File | null>(null)
 
   const validateForm = () => {
     if(!form.buildingName.trim()) {
@@ -77,13 +78,19 @@ export default function BuildingRegisterPage() {
     try {
       setIsSaving(true)
       const payload = createPayload()
+      const formData = new FormData()
+
+      formData.append("payload", JSON.stringify(payload))
+
+      if(imageFile) {
+        formData.append("file", imageFile)
+      }
+
       const res = await authFetch(`${ENDPOINT_URL}${PATH}`, {
         method: "post",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(payload)
+        body: formData
       })
+      
       if(!res.ok) {
         const errorBody = await res.json()
         console.log("登録失敗", errorBody)
@@ -125,7 +132,14 @@ export default function BuildingRegisterPage() {
         <button type="button" onClick={onSave} disabled={isSaving}>保存</button>
       </div>
       <div className={styles.card}>
-        <div>写真</div>
+        <input 
+          type="file"
+          accept="image/*"
+          onChange={(e) => {
+            const file = e.target.files?.[0] ?? null
+            setImageFile(file)
+          }}
+        />
         <div>その他</div>
       </div>
     </div>
