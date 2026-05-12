@@ -75,8 +75,10 @@ export default function BuildingRegisterPage() {
 
   const onSave = async () => {
     if(!validateForm()) return
+
     try {
       setIsSaving(true)
+
       const payload = createPayload()
       const formData = new FormData()
 
@@ -90,20 +92,22 @@ export default function BuildingRegisterPage() {
         method: "post",
         body: formData
       })
-      
+
       if(!res.ok) {
         const errorBody = await res.json()
         console.log("登録失敗", errorBody)
         alert("登録失敗")
         return
       }
+
       alert("登録成功")
+
       setForm(initialForm)
     } catch (error) {
         console.log("通信エラー", error)
         alert("通信エラーが発生しました")
     } finally {
-      setIsSaving(false)
+        setIsSaving(false)
     }
     
   }
