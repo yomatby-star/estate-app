@@ -3,7 +3,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.core.firebase_admin import initialize_firebase_admin
 from app.dependencies.auth import get_current_user
 from app.routers.properties import buildingRegister
+from dotenv import load_dotenv
 
+load_dotenv()
 app = FastAPI()
 
 initialize_firebase_admin()
