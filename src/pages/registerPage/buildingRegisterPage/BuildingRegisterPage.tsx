@@ -35,18 +35,22 @@ export default function BuildingRegisterPage() {
     buildingGarbage: "",
   })
 
-  const onSave = async () => {
+  const validateForm = () => {
     if(!form.buildingName.trim()) {
       alert("物件名を入力してください")
-      return
+      return false
     }
 
     if(!form.buildingAddr.trim()) {
       alert("住所を入力してください")
-      return
+      return false
     }
 
-    const body = {
+    return true
+  }
+
+  const createPayload = () => {
+    return {
       basic: {
         name: form.buildingName
       },
@@ -63,20 +67,21 @@ export default function BuildingRegisterPage() {
         garbage: form.buildingGarbage
       }
     }
+  }
 
+  const onSave = async () => {
+    if(!validateForm()) return
+    const payload = createPayload()
     const res = await authFetch(`${ENDPOINT_URL}${PATH}`, {
       method: "post",
       headers: {
-        "Content-Type": "application/json",
+        "Content-type": "application/json"
       },
-      body: JSON.stringify(body)
+      body: JSON.stringify(payload)
     })
-
-    console.log("送信body", body)
-
     if(!res.ok) {
       const errorBody = await res.json()
-      console.log("登録失敗 detail", errorBody)
+      console.log("登録失敗", errorBody)
       alert("登録失敗")
       return
     }
