@@ -36,6 +36,7 @@ export default function BuildingRegisterPage() {
   }
 
   const [form, setForm] = useState(initialForm)
+  const [isSaving, setIsSaving] = useState(false)
 
   const validateForm = () => {
     if(!form.buildingName.trim()) {
@@ -73,24 +74,31 @@ export default function BuildingRegisterPage() {
 
   const onSave = async () => {
     if(!validateForm()) return
-    const payload = createPayload()
-    const res = await authFetch(`${ENDPOINT_URL}${PATH}`, {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(payload)
-    })
-    if(!res.ok) {
-      const errorBody = await res.json()
-      console.log("登録失敗", errorBody)
-      alert("登録失敗")
-      return
+    try {
+      setIsSaving(true)
+      const payload = createPayload()
+      const res = await authFetch(`${ENDPOINT_URL}${PATH}`, {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      })
+      if(!res.ok) {
+        const errorBody = await res.json()
+        console.log("登録失敗", errorBody)
+        alert("登録失敗")
+        return
+      }
+      alert("登録成功")
+      setForm(initialForm)
+    } catch (error) {
+        console.log("通信エラー", error)
+        alert("通信エラーが発生しました")
+    } finally {
+      setIsSaving(false)
     }
-
-    alert("登録成功")
-
-    setForm(initialForm)
+    
   }
 
   return (
@@ -114,7 +122,7 @@ export default function BuildingRegisterPage() {
             />
           </div>
         )}
-        <button type="button" onClick={onSave}>保存</button>
+        <button type="button" onClick={onSave} disabled={isSaving}>保存</button>
       </div>
       <div className={styles.card}>
         <div>写真</div>
