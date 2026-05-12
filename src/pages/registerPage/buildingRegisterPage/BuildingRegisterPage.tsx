@@ -21,7 +21,7 @@ export default function BuildingRegisterPage() {
     { label: "ゴミ置場", key: "buildingGarbage", required: false },
   ] as const
 
-  const [form, setForm] = useState({
+  const initialForm = {
     buildingName: "",
     buildingAddr: "",
     buildingStructure: "",
@@ -33,7 +33,9 @@ export default function BuildingRegisterPage() {
     buildingAutoLock: "",
     buildingGas: "",
     buildingGarbage: "",
-  })
+  }
+
+  const [form, setForm] = useState(initialForm)
 
   const validateForm = () => {
     if(!form.buildingName.trim()) {
@@ -75,7 +77,7 @@ export default function BuildingRegisterPage() {
     const res = await authFetch(`${ENDPOINT_URL}${PATH}`, {
       method: "post",
       headers: {
-        "Content-type": "application/json"
+        "Content-Type": "application/json"
       },
       body: JSON.stringify(payload)
     })
@@ -87,6 +89,8 @@ export default function BuildingRegisterPage() {
     }
 
     alert("登録成功")
+
+    setForm(initialForm)
   }
 
   return (
