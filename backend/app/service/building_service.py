@@ -24,7 +24,6 @@ def create_building(
     )
     images.append(image_data)
 
-
   data = {
     "id": doc_ref.id,
     "uid": uid,
@@ -34,6 +33,7 @@ def create_building(
     "created_at": now,
     "updated_at": now,
   }
-  doc_ref.set(data)
   
+  doc_ref.set(data)
+
   return data

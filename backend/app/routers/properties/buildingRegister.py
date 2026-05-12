@@ -35,18 +35,6 @@ async def create_property_building(
     logger.exception("物件登録処理でエラーが発生しました")
     raise HTTPException (
       status_code=500,
-      detail="物件登録に失敗しました。"
+      detail="物件登録に失敗しました"
     )
   
-# @router.post("/{building_id}/images")
-# async def upload_image(building_id: str, file: UploadFile = File(...), current_user: dict = Depends(get_current_user)):
-#   res = upload_building_image(
-#     file=file,
-#     uid=current_user["uid"],
-#     building_id=building_id,
-#   )
-
-#   return {
-#     "message": "画像アップロード完了",
-#     "data": res
-#   }

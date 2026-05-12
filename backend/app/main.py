@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.firebase_admin import initialize_firebase_admin
-from app.dependencies.auth import get_current_user
+# from app.dependencies.auth import get_current_user
 from app.routers.properties import buildingRegister
 from dotenv import load_dotenv
 
@@ -18,15 +18,15 @@ app.add_middleware(
   allow_headers=["*"],
 )
 
-@app.get("/")
-def health_check():
-  return {"message": "backend is running"}
+# @app.get("/")
+# def health_check():
+#   return {"message": "backend is running"}
 
-@app.get("/me")
-def read_me(current_user: dict = Depends(get_current_user)):
-  return {
-    "message": "authenticated",
-    "user": current_user,
-  }
+# @app.get("/me")
+# def read_me(current_user: dict = Depends(get_current_user)):
+#   return {
+#     "message": "authenticated",
+#     "user": current_user,
+#   }
 
 app.include_router(buildingRegister.router)
