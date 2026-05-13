@@ -13,8 +13,8 @@ def upload_building_image(
 
   extension = file.filename.split(",")[-1]
   image_key = f"buildings/{building_id}/{uuid4()}.{extension}"
-  # print("image_key:", image_key)
-
+  print("image_key:", image_key)
+  
   client.upload_fileobj(
     file.file,
     backet_name,
