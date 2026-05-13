@@ -80,7 +80,7 @@ export default function BuildingRegisterPage() {
       setIsSaving(true)
 
       const payload = createPayload()
-      const formData = new FormData()
+      const formData = new FormData()// 画像・PDF・Excel
 
       formData.append("payload", JSON.stringify(payload))
 
