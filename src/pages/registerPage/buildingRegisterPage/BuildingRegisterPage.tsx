@@ -1,9 +1,13 @@
 import { authFetch } from "../../../api/authFetch"
 import { useState } from "react"
 import styles from "./BuildingRegisterPage.module.css"
+import { useNavigate } from "react-router-dom"
+import { REGISTER_NAV, ROUTES } from "../../../routes/rouets"
+
 
 
 export default function BuildingRegisterPage() {
+  const navigate = useNavigate()
   const ENDPOINT_URL = "http://127.0.0.1:8000"
   const PATH = "/api/v1/buildingRegister"
 
@@ -100,9 +104,16 @@ export default function BuildingRegisterPage() {
         return
       }
 
+      const data = await res.json()
+      console.log("data", data.data.id)
+
       alert("登録成功")
 
       setForm(initialForm)
+      setImageFile(null)
+
+      navigate(`${ROUTES.register}/${REGISTER_NAV.room}?buildingId=${data.data.id}`)
+
     } catch (error) {
         console.log("通信エラー", error)
         alert("通信エラーが発生しました")
@@ -133,7 +144,6 @@ export default function BuildingRegisterPage() {
             />
           </div>
         )}
-        <button type="button" onClick={onSave} disabled={isSaving}>保存</button>
       </div>
       <div className={styles.card}>
         <input 
@@ -144,7 +154,7 @@ export default function BuildingRegisterPage() {
             setImageFile(file)
           }}
         />
-        <div>その他</div>
+        <button type="button" onClick={onSave} disabled={isSaving}>保存</button>
       </div>
     </div>
   )
