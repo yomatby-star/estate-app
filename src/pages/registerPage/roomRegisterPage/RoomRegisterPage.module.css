@@ -19,9 +19,21 @@
     font-weight: 600;
     border-bottom: 1px solid #e5e5e5;
 }
+.statusField {
+    width: 200px;
+    padding: 4px 8px;
+}
 .inputFields {
     display: grid;
+    gap: 10px;
     grid-template-columns: 0.1fr 1fr;
+}
+.labelTitle {
+  background: #e5e5e5;
+  padding: 4px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  text-align: center;
 }
 .buttonField {
     text-align: right;

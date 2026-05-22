@@ -22,7 +22,7 @@
 .inputField {
   display: grid;
   align-items: center;
-  gap: 4px;
+  gap: 10px;
   grid-template-columns: 0.4fr 1fr;
 }
 .labelTitle {

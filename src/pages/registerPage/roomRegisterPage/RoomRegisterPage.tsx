@@ -18,7 +18,7 @@ export default function RoomRegisterPage() {
   const INPUT_ITEMS = [
     { label: "部屋番号", key: "roomNumber", required: true },
     { label: "家賃", key: "roomRent", required: true },
-    { label: "ステータス", key: "roomStatus", required: true }
+    { label: "募集状況", key: "roomStatus", required: true }
   ] as const
 
   const initialForm = {
@@ -107,17 +107,36 @@ export default function RoomRegisterPage() {
         </div>
         {INPUT_ITEMS.map(({ label, key, required }) => 
           <div key={key} className={styles.inputFields}>
-            <span>{label}{required && "*"}</span>
-            <input
-              required={required}
-              value={form[key]}
-              onChange={(e) => 
-                setForm((prev) => ({
-                  ...prev,
-                  [key]: e.target.value
-                }))
-              }
-            />
+            <span className={styles.labelTitle}>{label}{required && " *"}</span>
+
+            {key === "roomStatus" ? (
+              <select
+                className={styles.statusField}
+                value={form.roomStatus}
+                onChange={(e) => 
+                  setForm((prev) => ({
+                    ...prev,
+                    roomStatus: e.target.value
+                  }))
+                }
+              >
+                <option value="">選択してください</option>
+                <option value="vacant">空室</option>
+                <option value="closed">募集停止</option>
+                <option value="applying">申込有</option>
+              </select>
+            ) : (
+              <input
+                required={required}
+                value={form[key]}
+                onChange={(e) => 
+                  setForm((prev) => ({
+                    ...prev,
+                    [key]: e.target.value
+                  }))
+                }
+              />
+            )}
           </div>
         )}
         <div className={styles.buttonField}>
