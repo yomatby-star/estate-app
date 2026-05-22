@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useSearchParams } from "react-router-dom"
 import styles from "./RoomRegisterPage.module.css"
-import { Key } from "lucide-react"
+import { authFetch } from "../../../api/authFetch"
 
 
 
@@ -30,7 +30,70 @@ export default function RoomRegisterPage() {
   const [form, setForm] = useState(initialForm)
   const [isSaving, setIsSaving] = useState(false)
 
-  const onSave = () => console.log("保存をクリックしました")
+  const validateForm = () => {
+    if(!form.roomNumber.trim()) {
+      alert("部屋番号を入力してください")
+      return false
+    }
+
+    if(!form.roomRent.trim()) {
+      alert("家賃を入力してください")
+      return false
+    }
+
+    if(!form.roomStatus.trim()) {
+      alert("ステータスを選んでください")
+      return false
+    }
+
+    return true
+  }
+
+  const createPayload = () => {
+    return {
+      building_id: buildingId,
+      room: {
+        roomNumber: form.roomNumber,
+        rent: form.roomRent,
+        status: form.roomStatus
+      }
+    }
+  }
+
+  const onSave = async () => {
+    if(!validateForm()) return
+
+    try {
+      setIsSaving(true)
+
+      const payload = createPayload()
+
+      const res = await authFetch(ENDPOINT_URL, {
+        method: "post",
+        body: JSON.stringify(payload),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+
+      if(!res.ok) {
+        const errorBody = res.json()
+        console.log("部屋登録に失敗:", errorBody)
+        alert("部屋登録に失敗")
+        return
+      }
+
+      alert("部屋登録に成功")
+      setForm(initialForm)
+
+    } catch (error) {
+      console.log("通信エラー:", error)
+      alert("通信エラーが発生しました")
+
+    } finally {
+      setIsSaving(false)
+    }
+  }
 
 
   return (
@@ -57,7 +120,7 @@ export default function RoomRegisterPage() {
             />
           </div>
         )}
-        <button className={styles.save} onClick={onSave}>保存</button>
+        <button className={styles.save} onClick={onSave} disabled={isSaving}>保存</button>
       </div>
     </div>  
   )

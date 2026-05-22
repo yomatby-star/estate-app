@@ -7,19 +7,18 @@ def create_room(
     uid: str,
 ):
   db = get_firebase_client()
-  building_ref = db.collection("buildings").document(request.building_id)
-  room_ref = building_ref.collection("rooms").document()
+  room_ref = db.collection("rooms").document()
   now = datetime.now(timezone.utc)
 
   data = {
-    "id": room_ref,
+    "id": room_ref.id,
     "building_id": request.building_id,
     "uid": uid,
     "roomNumber": request.room.roomNumber,
     "rent": request.room.rent,
     "status": request.room.status,
     "created_at": now,
-    "updated_ut": now,
+    "updated_at": now,
   }
 
   room_ref.set(data)
