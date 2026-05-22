@@ -154,7 +154,9 @@ export default function BuildingRegisterPage() {
             setImageFile(file)
           }}
         />
-        <button type="button" onClick={onSave} disabled={isSaving}>保存</button>
+        <div className={styles.buttonField}>
+          <button type="button" className={styles.button} onClick={onSave} disabled={isSaving}>保存</button>
+        </div>
       </div>
     </div>
   )

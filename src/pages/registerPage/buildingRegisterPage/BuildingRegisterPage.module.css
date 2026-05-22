@@ -32,3 +32,14 @@
   border: 1px solid #ddd;
   text-align: center;
 }
+.buttonField {
+  text-align: right;
+}
+.button {
+  width: 100px;
+  border: none;
+  background: rgb(93, 93, 197);
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 12px;
+}

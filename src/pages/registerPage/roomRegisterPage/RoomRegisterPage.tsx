@@ -53,8 +53,8 @@ export default function RoomRegisterPage() {
     return {
       building_id: buildingId,
       room: {
-        roomNumber: form.roomNumber,
-        rent: form.roomRent,
+        roomNumber: Number(form.roomNumber),
+        rent: Number(form.roomRent),
         status: form.roomStatus
       }
     }
@@ -120,7 +120,9 @@ export default function RoomRegisterPage() {
             />
           </div>
         )}
-        <button className={styles.save} onClick={onSave} disabled={isSaving}>保存</button>
+        <div className={styles.buttonField}>
+          <button className={styles.button} onClick={onSave} disabled={isSaving}>保存</button>
+        </div>
       </div>
     </div>  
   )

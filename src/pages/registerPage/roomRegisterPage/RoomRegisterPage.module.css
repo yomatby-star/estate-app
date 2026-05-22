@@ -19,8 +19,18 @@
     font-weight: 600;
     border-bottom: 1px solid #e5e5e5;
 }
-
 .inputFields {
     display: grid;
     grid-template-columns: 0.1fr 1fr;
+}
+.buttonField {
+    text-align: right;
+}
+.button {
+  width: 100px;
+  border: none;
+  background: rgb(93, 93, 197);
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 12px;
 }
