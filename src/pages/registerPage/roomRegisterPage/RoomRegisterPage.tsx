@@ -1,11 +1,12 @@
 import { useState } from "react"
-import { useSearchParams } from "react-router-dom"
+import { useNavigate, useSearchParams } from "react-router-dom"
 import styles from "./RoomRegisterPage.module.css"
 import { authFetch } from "../../../api/authFetch"
-
+import { ROUTES, REGISTER_NAV } from "../../../routes/rouets"
 
 
 export default function RoomRegisterPage() {
+  const navigate = useNavigate()
   const [searchParamsto] = useSearchParams()
   const buildingId = searchParamsto.get("buildingId")
   const [selectedBuildingId, setSelectedBuildingId ] = useState(buildingId ?? "")
@@ -83,9 +84,13 @@ export default function RoomRegisterPage() {
         return
       }
 
+      // const data = await res.json()
+      // console.log("RoomData", data.data.id)
+
       alert("部屋登録に成功")
       setForm(initialForm)
 
+      navigate(`${ROUTES.register}/${REGISTER_NAV.owner}?buildingId=${buildingId}`)
     } catch (error) {
       console.log("通信エラー:", error)
       alert("通信エラーが発生しました")
