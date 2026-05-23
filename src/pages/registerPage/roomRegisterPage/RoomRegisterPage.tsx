@@ -7,8 +7,8 @@ import { ROUTES, REGISTER_NAV } from "../../../routes/rouets"
 
 export default function RoomRegisterPage() {
   const navigate = useNavigate()
-  const [searchParamsto] = useSearchParams()
-  const buildingId = searchParamsto.get("buildingId")
+  const [searchParams] = useSearchParams()
+  const buildingId = searchParams.get("buildingId")
   const [selectedBuildingId, setSelectedBuildingId ] = useState(buildingId ?? "")
 
   const ENDPOINT = "http://127.0.0.1:8000"
