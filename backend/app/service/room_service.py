@@ -8,6 +8,7 @@ def create_room(
 ):
   db = get_firebase_client()
   room_ref = db.collection("rooms").document()
+  
   now = datetime.now(timezone.utc)
 
   data = {
