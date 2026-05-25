@@ -13,14 +13,15 @@ def create_owner(
 
     data = {
         "id": owner_ref.id,
-        "building_id": request.buiding_id,
+        "building_id": request.building_id,
         "uid": uid,
-        "ownerName": request.ownerName,
-        "ownerAddr": request.ownerAddr,
+        "ownerName": request.owner.ownerName,
+        "ownerAddr": request.owner.ownerAddr,
         "created_at": now,
         "updated_at": now,
     }
 
     owner_ref.set(data)
 
+    print("成功？")
     return data

@@ -9,5 +9,5 @@ class OwnerData(BaseModel):
     ownerAddr: str = Field(..., min_length=1)
 
 class OwnerCreateRequest(BaseModel):
-    buiding_id: str = Field(..., min_length=1)
+    building_id: str = Field(..., min_length=1)
     owner: OwnerData
