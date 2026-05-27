@@ -6,6 +6,8 @@ from app.schemas.property import PropertyCreateRequest
 from app.service.building_service import create_building
 from app.service.building_image_service import upload_building_image
 
+# from app.dependencies.auth import get_current_user
+
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/api/v1/buildingRegister", tags=["buildingRegister"])
 

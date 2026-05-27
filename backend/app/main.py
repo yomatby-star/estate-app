@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.core.firebase_admin import initialize_firebase_admin
 # from app.dependencies.auth import get_current_user
 from app.routers.properties import buildingRegister, room, ownerRegister
+from app.routers.properties.getProperties import getProperties
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -34,3 +35,6 @@ app.add_middleware(
 app.include_router(buildingRegister.router)
 app.include_router(room.router)
 app.include_router(ownerRegister.router)
+
+# 物件リスト　表示
+app.include_router(getProperties.router)
