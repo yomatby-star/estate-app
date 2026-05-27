@@ -29,6 +29,8 @@ app.add_middleware(
 #     "user": current_user,
 #   }
 
+
+# 「新規登録　物件・部屋・貸主」
 app.include_router(buildingRegister.router)
 app.include_router(room.router)
 app.include_router(ownerRegister.router)
