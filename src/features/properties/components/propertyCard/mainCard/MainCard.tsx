@@ -4,7 +4,7 @@ import { ROUTES } from "../../../../../routes/rouets"
 import styles from "./MainCard.module.css"
 
 type Props = {
-  property: Property
+  property: Property;
 }
 
 export default function MainCard({ property }: Props) {
@@ -12,7 +12,7 @@ export default function MainCard({ property }: Props) {
   const path = `${ROUTES.property}/${property.id}`
   return (
     <Link to={path} className={styles.card}>
-      {/* <img src={property.image} className={styles.image} alt="物件写真" /> */}
+      <img src={property.imageUrl} className={styles.image} alt="物件写真" />
       <div className={styles.basic}>
         <div>{property.basic.name}</div>
         <div>{property.common.addr}</div>

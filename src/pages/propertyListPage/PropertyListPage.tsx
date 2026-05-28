@@ -6,6 +6,7 @@ import SearchInput from "../../features/properties/components/searchInput/Search
 import styles from "./PropertyListPage.module.css"
 import { getProperties } from "../../api/getProperties/getProperties"
 import type{ Property } from "../../mocks/properties/mock"
+import { getImages } from "../../api/getProperties/getImages"
 
 
 
@@ -23,7 +24,29 @@ export default function PropertyListPage() {
     const fetchProperties = async () => {
       try {
         const data = await getProperties()
-        setProperties(data)
+        const propertyWithImages = await Promise.all(
+          data.map(async (property: Property) => {
+            const firstImage = property.images?.[0]
+            // console.log("firstImage:", firstImage)
+
+            if(!firstImage) {
+              return {
+                ...property,
+                imageUrl: ""
+              }
+            }
+
+            const imageData = await getImages(
+              firstImage.image_key
+            )
+
+            return {
+              ...property,
+              imageUrl: imageData.url
+            }
+          })
+        )
+        setProperties(propertyWithImages)
       } catch (error) {
         console.log("物件一覧取得失敗:", error)
       }
@@ -31,7 +54,7 @@ export default function PropertyListPage() {
     fetchProperties()
   },[])
 
-  console.log("properties", properties)
+  // console.log("properties", properties)
 
   const q = query.trim()
   const inputSearched = !q
@@ -43,7 +66,7 @@ export default function PropertyListPage() {
         p.common.mansionType,
         p.common.station,
         p.common.structure,
-        p.common.local ,
+        p.common.local
       ]
       return targets.some((item) => item.includes(q))
     }
@@ -52,7 +75,8 @@ export default function PropertyListPage() {
   // const filtered = !onlyVacant
   //  ? inputSearched
   //  : inputSearched.filter((s) => 
-  //   s.roomStatus.some((r) => r.status === "vacant")
+  //   s.imageUrl
+  //   // s.roomStatus.some((r) => r.status === "vacant")
   // )
 
   return (

@@ -42,7 +42,14 @@ export type Property = {
   //   photo: string[];
   // }[];
   // image: string;
-  // images: string[]
+  images: [
+    {
+      content_type: string;
+      file_name: string;
+      image_key: string;
+    }
+  ],
+  imageUrl: string,
 }
 
 // export const mockProperties: Property[] = [

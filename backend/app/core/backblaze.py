@@ -1,5 +1,6 @@
 import os
 import boto3
+from botocore.config import Config
 
 # Backblaze接続
 def get_b2_client():
@@ -7,5 +8,8 @@ def get_b2_client():
     "s3",
     endpoint_url=os.getenv("B2_ENDPOINT_URL"),
     aws_access_key_id=os.getenv("B2_KEY_ID"),
-    aws_secret_access_key=os.getenv("B2_APPLICATION_KEY")
+    aws_secret_access_key=os.getenv("B2_APPLICATION_KEY"),
+    config=Config(
+      signature_version="s3v4"
+    )
   )
