@@ -14,7 +14,7 @@ export default function PropertyCard({ filtered, onlyVacant, onVacantFilterClick
       <header className={styles.header}>
         <span>{`${filtered.length} 件`}</span>
         <div className={styles.filteredButtonField}>
-          <button className={`${styles.filterButton} ${onlyVacant ? styles.active : ""}`} onClick={onVacantFilterClick}>空室有</button>
+          {/* <button className={`${styles.filterButton} ${onlyVacant ? styles.active : ""}`} onClick={onVacantFilterClick}>空室有</button> */}
         </div>
       </header>
 

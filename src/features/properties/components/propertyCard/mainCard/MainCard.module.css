@@ -1,7 +1,8 @@
 .card {
+  max-height: 140px;
   display: flex;
-  align-items: center;
-  gap: 60px;
+  /* align-items: center; */
+  gap: 20px;
   background: #fff;
   padding: 8px;
 }
@@ -10,21 +11,55 @@
   background: #e5e4e4;
   box-shadow: 0 4px 12px rgba(0,0,0,0.9);
 }
-
 .image {
-  width: 180px;
-  height: 100px;
+  min-width: 180px;
+  min-height: 120px;
   border-radius: 10px;
   object-fit: cover;
 }
-
-.basic {
-  display: grid;
-  gap: 4px;
+.itemsField {
+  display: flex;
+  width: 100%;
+  /* gap: 10px; */
+  /* background: red; */
+}
+.innerField {
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+  width: 100%;
+}
+.labelField {
+  background: rgb(109, 108, 108);
+  min-width: 10px;
+  padding: 4px 2px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #f4f4f4;
+  /* border-radius: 10px; */
+  text-align: center;
+}
+.valueField {
+  /* background: rgb(228, 228, 230); */
+  /* min-width: 160px; */
+  font-size: 14px;
+  text-align: center;
 }
 
-.vacabtButton {
+/* .basic {
+  display: grid;
+  gap: 4px;
+} */
+
+/* .labelTitleField {
+  background: red;
+}
+.labelTitle {
+ 
+} */
+
+/* .vacabtButton {
   border: none;
   padding: 4px 12px;
   border-radius: 10px;
-}
+} */

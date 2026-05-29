@@ -36,6 +36,7 @@
   display: grid;
   gap: 6px;
   background: transparent;
+  min-height: 540px;
   max-height: 540px;
   overflow-y: auto;
 }
