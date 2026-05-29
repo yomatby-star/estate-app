@@ -8,6 +8,15 @@
   padding: 6px 12px;
 }
 
+.iconAndTitle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.icon {
+  color: rgb(93, 58, 236);
+}
+
 .title {
   font-size: 18px;
   font-weight: 600;

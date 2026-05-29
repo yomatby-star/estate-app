@@ -1,7 +1,6 @@
 import { NavLink, Outlet, useParams } from "react-router-dom"
 import { PROPERTY_NAV, ROUTES } from "../../routes/rouets"
 import styles from "./PropertyDetailLayout.module.css"
-// import { mockProperties } from "../../mocks/properties/mock"
 import { useState } from "react"
 
 export default function PropertyDetailLayout() {

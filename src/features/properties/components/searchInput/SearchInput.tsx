@@ -1,3 +1,4 @@
+import { Building2 } from "lucide-react"
 import styles from "./SearchInput.module.css"
 
 type Props = {
@@ -10,13 +11,16 @@ type Props = {
 export default function SearchInput({ title, query, onChangeQuery, onSearch }: Props) {
   return (
     <div className={styles.titleInputField}>
-      <div className={styles.title}>{title}</div>
+      <div className={styles.iconAndTitle}>
+        <Building2 className={styles.icon} />
+        <div className={styles.title}>{title}</div>
+      </div>
       <div className={styles.inputField}>
         <input
           value={query}
           className={styles.input}
           onChange={(e) => onChangeQuery(e.target.value)}
-          placeholder="物件名・住所"
+          placeholder="物件名・住所で検索"
           onKeyDown={(e) => {
             if(e.key === "Enter" && !e.nativeEvent.isComposing) onSearch()
           }}

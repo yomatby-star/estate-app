@@ -14,11 +14,11 @@ export default function PropertyListPage() {
   const title = navMainContentsTitle()
   const [inputValue, setInputValue] = useState("")
   const [query, setQuery] = useState("")
-  const [onlyVacant, setOnlyVacant] = useState(false)
+  // const [onlyVacant, setOnlyVacant] = useState(false)
   const [properties, setProperties] = useState<Property[]>([])
 
   const onSearch = () => setQuery(inputValue)
-  const onVacantFilterClick = () => setOnlyVacant((prev) => !prev)
+  // const onVacantFilterClick = () => setOnlyVacant((prev) => !prev)
   
   useEffect(() => {
     const fetchProperties = async () => {
@@ -89,8 +89,8 @@ export default function PropertyListPage() {
         />
       <PropertyCard 
         filtered={inputSearched}
-        onlyVacant={onlyVacant}
-        onVacantFilterClick={onVacantFilterClick}
+        // onlyVacant={onlyVacant}
+        // onVacantFilterClick={onVacantFilterClick}
       />
     </div>
   )

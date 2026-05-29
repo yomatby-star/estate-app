@@ -1,28 +1,87 @@
 .card {
   max-height: 140px;
   display: flex;
-  /* align-items: center; */
   gap: 20px;
   background: #fff;
   padding: 8px;
+  border-radius: 12px;
+  border: solid 1px #e5e5e5;
+  box-shadow: 2px 2px 4px rgba(190, 189, 189, 0.9);
 }
 .card:hover {
   transform: translateY(-2px);
   background: #e5e4e4;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.9);
+  border: solid 2px #38699d;
+  /* box-shadow: 0 4px 12px rgba(0,0,0,0.9); */
 }
 .image {
+  width: 300px;
   min-width: 180px;
   min-height: 120px;
   border-radius: 10px;
   object-fit: cover;
 }
 .itemsField {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr;
+  align-items: center;
   width: 100%;
-  /* gap: 10px; */
-  /* background: red; */
 }
+.basicField {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.field {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+}
+.trainIcon {
+  width: 30px;
+  height: 60px;
+  color: rgb(93, 58, 236);
+}
+.buildingIcon {
+  width: 30px;
+  height: 60px;
+  color: rgb(41, 163, 75);
+}
+.innerBorder {
+  border-right: 1px solid #979494a1;
+  margin-right: 24px;
+}
+.structureField {
+  text-align: center;
+  background: #757474;
+  color: #fff;
+  border-radius: 999px;
+}
+.structureValue {
+  text-align: center;
+}
+.buildingNameTitle {
+  font-size: 18px;
+  font-weight: 600;
+}
+.buildingAddrTitle {
+  font-size: 14px;
+  color: #5c5c5c;
+}
+/* .buildingIconField {
+  background: #e5e5e5;
+  width: 60px;
+  height: 80px;
+  border: #000;
+  border-radius: 999px;
+}
+.buildingIcon {
+  width: 30px;
+  height: 80px;
+  color: rgb(93, 58, 236);
+  margin: 0 auto;
+} */
 .innerField {
   display: flex;
   gap: 8px;
@@ -36,27 +95,12 @@
   font-size: 16px;
   font-weight: 600;
   color: #f4f4f4;
-  /* border-radius: 10px; */
   text-align: center;
 }
 .valueField {
-  /* background: rgb(228, 228, 230); */
-  /* min-width: 160px; */
   font-size: 14px;
   text-align: center;
 }
-
-/* .basic {
-  display: grid;
-  gap: 4px;
-} */
-
-/* .labelTitleField {
-  background: red;
-}
-.labelTitle {
- 
-} */
 
 /* .vacabtButton {
   border: none;
