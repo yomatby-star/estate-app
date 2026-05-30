@@ -3,26 +3,26 @@ import { useState } from "react"
 import styles from "./BuildingRegisterPage.module.css"
 import { useNavigate } from "react-router-dom"
 import { REGISTER_NAV, ROUTES } from "../../../routes/rouets"
-
+import { ENDPOINT_URL } from "../../../api/mixin/mixin"
 
 
 export default function BuildingRegisterPage() {
   const navigate = useNavigate()
-  const ENDPOINT_URL = "http://127.0.0.1:8000"
-  const PATH = "/api/v1/buildingRegister"
+  const ENDPOINT = `${ENDPOINT_URL}/api/v1/buildingRegister`
+  // console.log("ENDPOINT", ENDPOINT)
 
   const INPUT_ITEMS = [
-    { label: "物件名", key: "buildingName", required: true },
-    { label: "住所", key: "buildingAddr", required: true },
-    { label: "構造", key: "buildingStructure", required: false },
-    { label: "種別", key: "buildingMansionType", required: false },
-    { label: "路線", key: "buildingLocal", required: false },
-    { label: "駅名", key: "buildingStation", required: false },
-    { label: "築年", key: "buildingYear", required: false },
-    { label: "階数", key: "buildingFloors", required: false },
-    { label: "オートロック", key: "buildingAutoLock", required: false },
-    { label: "ガス", key: "buildingGas", required: false },
-    { label: "ゴミ置場", key: "buildingGarbage", required: false },
+    { label: "物件名", key: "buildingName", required: true, type: "input" },
+    { label: "住所", key: "buildingAddr", required: true, type: "input" },
+    { label: "構造", key: "buildingStructure", required: false, type: "select", options: ["木造", "鉄骨", "軽量鉄骨", "鉄筋コンクリート"] },
+    { label: "種別", key: "buildingMansionType", required: false, type: "select", options: ["アパート", "マンション", "ビル", "テナント"]  },
+    { label: "路線", key: "buildingLocal", required: false, type: "input" },
+    { label: "駅名", key: "buildingStation", required: false, type: "input" },
+    { label: "築年", key: "buildingYear", required: false, type: "number" },
+    { label: "階数", key: "buildingFloors", required: false, type: "number" },
+    { label: "オートロック", key: "buildingAutoLock", required: false, type: "select", options: ["有", "無"] },
+    { label: "ガス", key: "buildingGas", required: false, type: "select", options: ["東京ガス", "プロパンガス", "不明"] },
+    { label: "ゴミ置場", key: "buildingGarbage", required: false, type: "select", options: ["敷地内", "地域指定", "無"] },
   ] as const
 
   const initialForm = {
@@ -92,7 +92,7 @@ export default function BuildingRegisterPage() {
         formData.append("file", imageFile)
       }
 
-      const res = await authFetch(`${ENDPOINT_URL}${PATH}`, {
+      const res = await authFetch(ENDPOINT, {
         method: "post",
         body: formData
       })
@@ -127,25 +127,67 @@ export default function BuildingRegisterPage() {
     <div className={styles.stack}>
       <div className={styles.card}>
         <strong className={styles.title}>物件登録</strong>
-        {INPUT_ITEMS.map(({ label, key, required }) => 
-          <div key={key} className={styles.inputField}>
+        {INPUT_ITEMS.map(( item ) => 
+          <div key={item.key} className={styles.inputField}>
             <span className={styles.labelTitle}>
-              {label}{required && " *"}
+              {item.label}{item.required && " *"}
             </span>
-            <input
-              required={required}
-              value={form[key]}
-              onChange={(e) => 
-                setForm((prev) => ({
-                  ...prev,
-                  [key]: e.target.value
-                }))
+            {
+              item.type === "select" 
+              ? (
+                  <select
+                    value={form[item.key]}
+                    required={item.required}
+                    onChange={(e) => {
+                      setForm((prev) => ({
+                        ...prev,
+                        [item.key]: e.target.value
+                      }))
+                    }}
+                  >
+                    <option value="">選択してください</option>
+                    {item.options.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                ) 
+              : item.type === "number" 
+                ? (
+                  <input 
+                    value={form[item.key]}
+                    type="number"
+                    min="0"
+                    required={item.required}
+                    onChange={(e) => 
+                      setForm((prev) => ({
+                        ...prev,
+                        [item.key]: e.target.value
+                      }))
+                    }
+                  />
+                )
+              : (
+                  <input
+                    required={item.required}
+                    value={form[item.key]}
+                    onChange={(e) => 
+                      setForm((prev) => ({
+                        ...prev,
+                        [item.key]: e.target.value
+                      }))
+                    }
+                  />
+                )
               }
-            />
+              
+
           </div>
         )}
       </div>
       <div className={styles.card}>
+        <span>外観画像を登録してください</span>
         <input 
           type="file"
           accept="image/*"

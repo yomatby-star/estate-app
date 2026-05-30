@@ -61,22 +61,6 @@ export default function MainCard({ property }: Props) {
           <span className={styles.structureField}>構造</span>
           <span className={styles.structureValue}>{buildingStructure}</span>
         </div>
-        {/* <div className={styles.buildingIconField}>
-          <Building2 className={styles.buildingIcon}/>
-        </div> */}
-        {/* {listItems.map(({ id, label, value }) => 
-          <div key={id} className={styles.innerField}>
-            <div>
-              <Building2 />
-            </div>
-            <div className={styles.labelField}>
-              <span>{label}</span>
-            </div>
-            <div className={styles.valueField}>
-              <span>{value}</span>
-            </div>
-          </div>
-        )} */}
       </div>
     </Link>
   )
