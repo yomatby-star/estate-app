@@ -4,6 +4,7 @@ import styles from "./BuildingRegisterPage.module.css"
 import { useNavigate } from "react-router-dom"
 import { REGISTER_NAV, ROUTES } from "../../../routes/rouets"
 import { ENDPOINT_URL } from "../../../api/mixin/mixin"
+import { Upload } from "lucide-react"
 
 
 export default function BuildingRegisterPage() {
@@ -124,81 +125,114 @@ export default function BuildingRegisterPage() {
   }
 
   return (
-    <div className={styles.stack}>
-      <div className={styles.card}>
-        <strong className={styles.title}>物件登録</strong>
-        {INPUT_ITEMS.map(( item ) => 
-          <div key={item.key} className={styles.inputField}>
-            <span className={styles.labelTitle}>
-              {item.label}{item.required && " *"}
-            </span>
-            {
-              item.type === "select" 
-              ? (
-                  <select
-                    value={form[item.key]}
-                    required={item.required}
-                    onChange={(e) => {
-                      setForm((prev) => ({
-                        ...prev,
-                        [item.key]: e.target.value
-                      }))
-                    }}
-                  >
-                    <option value="">選択してください</option>
-                    {item.options.map((option) => (
-                      <option key={option} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                ) 
-              : item.type === "number" 
+    <div className={styles.container}>
+      <div className={styles.stack}>
+        <div className={styles.card}>
+          <strong className={styles.title}>物件登録</strong>
+          {INPUT_ITEMS.map(( item ) => 
+            <div key={item.key} className={styles.inputField}>
+              <span className={styles.labelTitle}>
+                {item.label}{item.required && " *"}
+              </span>
+              {
+                item.type === "select" 
                 ? (
-                  <input 
-                    value={form[item.key]}
-                    type="number"
-                    min="0"
-                    required={item.required}
-                    onChange={(e) => 
-                      setForm((prev) => ({
-                        ...prev,
-                        [item.key]: e.target.value
-                      }))
-                    }
-                  />
-                )
-              : (
-                  <input
-                    required={item.required}
-                    value={form[item.key]}
-                    onChange={(e) => 
-                      setForm((prev) => ({
-                        ...prev,
-                        [item.key]: e.target.value
-                      }))
-                    }
-                  />
-                )
-              }
-              
-
-          </div>
-        )}
-      </div>
-      <div className={styles.card}>
-        <span>外観画像を登録してください</span>
-        <input 
-          type="file"
-          accept="image/*"
-          onChange={(e) => {
-            const file = e.target.files?.[0] ?? null
-            setImageFile(file)
-          }}
-        />
-        <div className={styles.buttonField}>
-          <button type="button" className={styles.button} onClick={onSave} disabled={isSaving}>保存</button>
+                    <select
+                      value={form[item.key]}
+                      required={item.required}
+                      onChange={(e) => {
+                        setForm((prev) => ({
+                          ...prev,
+                          [item.key]: e.target.value
+                        }))
+                      }}
+                    >
+                      <option value="">選択してください</option>
+                      {item.options.map((option) => (
+                        <option key={option} value={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+                  ) 
+                : item.type === "number" 
+                  ? (
+                    <input 
+                      value={form[item.key]}
+                      type="number"
+                      min="0"
+                      required={item.required}
+                      onChange={(e) => 
+                        setForm((prev) => ({
+                          ...prev,
+                          [item.key]: e.target.value
+                        }))
+                      }
+                    />
+                  )
+                : (
+                    <input
+                      required={item.required}
+                      value={form[item.key]}
+                      onChange={(e) => 
+                        setForm((prev) => ({
+                          ...prev,
+                          [item.key]: e.target.value
+                        }))
+                      }
+                    />
+                  )
+                }
+            </div>
+          )}
         </div>
+
+        <div className={styles.card}>
+          <div className={styles.imageFieldInner}>
+            <div className={styles.imageTitleField}>
+              <span className={styles.imageTitle}>外観画像を登録してください</span>
+              <span className={styles.imageSubTitle}>物件の外観画像を1枚アップロードしてください</span>
+            </div>
+
+            <label htmlFor="image-upload">
+              <div className={styles.uploadArea}>
+                <input 
+                  id="image-upload"
+                  type="file"
+                  accept="image/*"
+                  className={styles.hiddenInput}
+                  onChange={(e) => {
+                    const file = e.target.files?.[0] ?? null
+                    setImageFile(file)
+                  }}
+                />
+                <Upload size={40} className={styles.fileIcon}/>
+                <span className={styles.uploadLabel}>ファイルを選択</span>
+                <span className={styles.inputText}>JPG, PNG, WEBP（最大5MB）</span>
+              </div>
+            </label>
+
+            <div className={styles.imageTitleField}>
+              <span className={styles.imageTitle}>プレビュー</span>
+            </div>
+
+            <div className={styles.previewField}>
+              {imageFile ? (
+                <img 
+                  src={URL.createObjectURL(imageFile)}
+                  alt="preview"
+                  className={styles.previewFieldImage}
+                />
+              ) : (
+                <span className={styles.noImageText}>画像が選択されていません</span>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className={styles.buttonField}>
+        <button type="button" className={styles.button} onClick={onSave} disabled={isSaving}>保存</button>
       </div>
     </div>
   )
