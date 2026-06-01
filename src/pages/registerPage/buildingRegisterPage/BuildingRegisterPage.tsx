@@ -1,10 +1,10 @@
 import { authFetch } from "../../../api/authFetch"
 import { useState } from "react"
-import styles from "./BuildingRegisterPage.module.css"
 import { useNavigate } from "react-router-dom"
 import { REGISTER_NAV, ROUTES } from "../../../routes/rouets"
 import { ENDPOINT_URL } from "../../../api/mixin/mixin"
 import { Upload } from "lucide-react"
+import styles from "./BuildingRegisterPage.module.css"
 
 
 export default function BuildingRegisterPage() {

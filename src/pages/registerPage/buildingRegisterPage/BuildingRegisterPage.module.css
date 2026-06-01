@@ -57,6 +57,7 @@
 .uploadArea {
   border: 2px dashed #8b5cf6;
   border-radius: 12px;
+  background: #f0eeeeb8;
   padding: 40px;
   text-align: center;
   display: flex;
@@ -77,13 +78,18 @@
 .uploadLabel {
   font-size: 18px;
   font-weight: 600;
+  background: #8b5cf6;
+  padding: 4px 8px;
+  border-radius: 12px;
+  color: #fff;
   cursor: pointer;
 }
 .previewField {
   min-height: 200px;
   max-height: 160px;
-  border:  1px solid #e5e7eb;
+  border:  2px solid #e5e7eb;
   border-radius: 12px;
+  background: #f0eeeeb8;
 }
 .previewFieldImage {
   width: 100%;
