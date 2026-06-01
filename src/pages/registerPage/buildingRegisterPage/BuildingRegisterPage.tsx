@@ -3,7 +3,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { REGISTER_NAV, ROUTES } from "../../../routes/rouets"
 import { ENDPOINT_URL } from "../../../api/mixin/mixin"
-import { Upload } from "lucide-react"
+import { Upload, Building2 } from "lucide-react"
 import styles from "./BuildingRegisterPage.module.css"
 
 
@@ -121,14 +121,21 @@ export default function BuildingRegisterPage() {
     } finally {
         setIsSaving(false)
     }
-    
+  }
+
+  const onReset = () => {
+    setForm(initialForm)
+    setImageFile(null)
   }
 
   return (
     <div className={styles.container}>
       <div className={styles.stack}>
         <div className={styles.card}>
-          <strong className={styles.title}>物件登録</strong>
+          <div className={styles.titleIconField}>
+            <Building2 size={26} color="#8b5cf6"/>
+            <strong className={styles.title}>物件登録</strong>
+          </div>
           {INPUT_ITEMS.map(( item ) => 
             <div key={item.key} className={styles.inputField}>
               <span className={styles.labelTitle}>
@@ -140,6 +147,7 @@ export default function BuildingRegisterPage() {
                     <select
                       value={form[item.key]}
                       required={item.required}
+                      className={styles.select}
                       onChange={(e) => {
                         setForm((prev) => ({
                           ...prev,
@@ -159,6 +167,7 @@ export default function BuildingRegisterPage() {
                   ? (
                     <input 
                       value={form[item.key]}
+                      className={styles.input}
                       type="number"
                       min="0"
                       required={item.required}
@@ -172,6 +181,7 @@ export default function BuildingRegisterPage() {
                   )
                 : (
                     <input
+                      className={styles.input}
                       required={item.required}
                       value={form[item.key]}
                       onChange={(e) => 
@@ -224,7 +234,7 @@ export default function BuildingRegisterPage() {
                   className={styles.previewFieldImage}
                 />
               ) : (
-                <span className={styles.noImageText}>画像が選択されていません</span>
+                <span className={styles.noImageText}>上部の「ファイルを選択」から画像を添付してください</span>
               )}
             </div>
           </div>
@@ -232,6 +242,7 @@ export default function BuildingRegisterPage() {
       </div>
 
       <div className={styles.buttonField}>
+        <button type="button" className={`${styles.button} ${styles.resetButton}`} onClick={onReset}>リセット</button>
         <button type="button" className={styles.button} onClick={onSave} disabled={isSaving}>保存</button>
       </div>
     </div>
