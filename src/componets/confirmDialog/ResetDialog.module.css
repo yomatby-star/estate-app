@@ -1,0 +1,44 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+.modal {
+    width: 400px;
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.9);
+}
+.buttonArea {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+}
+.confirmButton {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.confirmButton:hover{ 
+    filter: brightness(0.9);
+}
+.resetButton {
+    background: #dc2626;
+    color: #fff;
+}
+.title {
+    font-size: 18px;
+}
+.message {
+    font-size: 16px;
+    border-bottom: 1px solid #e5e5e5;
+    padding-bottom: 4px;
+}

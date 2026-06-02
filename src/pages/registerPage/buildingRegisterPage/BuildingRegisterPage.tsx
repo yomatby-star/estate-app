@@ -5,6 +5,7 @@ import { REGISTER_NAV, ROUTES } from "../../../routes/rouets"
 import { ENDPOINT_URL } from "../../../api/mixin/mixin"
 import { Upload, Building2 } from "lucide-react"
 import styles from "./BuildingRegisterPage.module.css"
+import ResetDialog from "../../../componets/confirmDialog/ResetDialog"
 
 
 export default function BuildingRegisterPage() {
@@ -43,6 +44,7 @@ export default function BuildingRegisterPage() {
   const [form, setForm] = useState(initialForm)
   const [isSaving, setIsSaving] = useState(false)
   const [imageFile, setImageFile] = useState<File | null>(null)
+  const [isOpen, setIsOpen] = useState(false)
 
   const validateForm = () => {
     if(!form.buildingName.trim()) {
@@ -123,9 +125,10 @@ export default function BuildingRegisterPage() {
     }
   }
 
-  const onReset = () => {
+  const handleReset = () => {
     setForm(initialForm)
     setImageFile(null)
+    setIsOpen(false)
   }
 
   return (
@@ -242,9 +245,17 @@ export default function BuildingRegisterPage() {
       </div>
 
       <div className={styles.buttonField}>
-        <button type="button" className={`${styles.button} ${styles.resetButton}`} onClick={onReset}>リセット</button>
+        <button type="button" className={`${styles.button} ${styles.resetButton}`} onClick={() => setIsOpen(true)}>リセット</button>
         <button type="button" className={styles.button} onClick={onSave} disabled={isSaving}>保存</button>
       </div>
+
+      <ResetDialog 
+        open={isOpen}
+        title="リセットしますか？"
+        message="「はい」を押すと戻れません"
+        onConfirm={handleReset}
+        onClose={() => setIsOpen(false)}
+      />
     </div>
   )
 }
