@@ -78,6 +78,9 @@
   flex-direction: column;
   gap: 8px;
 }
+.uploadArea:hover {
+  filter: brightness(0.9);
+}
 .inputText {
   font-size: 14px;
   color: #828080
@@ -138,7 +141,7 @@
   font-size: 18px;
 }
 .button:hover {
-  box-shadow: 0 4px 6px #333232;
+  filter: brightness(0.9);
 }
 .resetButton {
   background: rgb(245, 245, 246);
