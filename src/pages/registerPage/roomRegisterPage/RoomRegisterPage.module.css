@@ -1,10 +1,11 @@
 .stack {
-    display: flex;
-    align-items: start;
+    display: grid;
+    gap: 20px;
     height: 100%;
 }
 .card {
     flex: 1;
+    max-height: 100%;
     display: grid;
     gap: 10px;
     background: #fff;
@@ -19,6 +20,15 @@
     font-weight: 600;
     border-bottom: 1px solid #e5e5e5;
 }
+.inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+.rightInner {
+    display: grid;
+    gap: 8px;
+}
 .statusField {
     width: 200px;
     padding: 4px 8px;
@@ -29,6 +39,7 @@
     grid-template-columns: 0.1fr 1fr;
 }
 .labelTitle {
+  width: 200px;
   background: #e5e5e5;
   padding: 4px;
   border-radius: 12px;
@@ -36,7 +47,39 @@
   text-align: center;
 }
 .buttonField {
-    text-align: right;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+.equipmentArea {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.equipmentList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    border: 1px solid #e5e5e5;
+    padding: 8px 12px;
+}
+.equipment {
+    padding: 6px 8px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    background: white;
+    cursor: pointer;
+}
+.equipmentActive {
+  padding: 8px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+
+  color: white;
+  background: #3d75ef;
+  border: 1px solid #2563eb;
 }
 .button {
   width: 100px;

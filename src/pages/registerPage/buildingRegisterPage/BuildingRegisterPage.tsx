@@ -5,8 +5,8 @@ import { REGISTER_NAV, ROUTES } from "../../../routes/rouets"
 import { ENDPOINT_URL } from "../../../api/mixin/mixin"
 import { Upload, Building2 } from "lucide-react"
 import toast from "react-hot-toast"
-import styles from "./BuildingRegisterPage.module.css"
 import ResetDialog from "../../../componets/confirmDialog/ResetDialog"
+import styles from "./BuildingRegisterPage.module.css"
 
 
 export default function BuildingRegisterPage() {
@@ -49,13 +49,11 @@ export default function BuildingRegisterPage() {
 
   const validateForm = () => {
     if(!form.buildingName.trim()) {
-      // alert("物件名を入力してください")
       toast.error("物件名を入力してください")
       return false
     }
 
     if(!form.buildingAddr.trim()) {
-      // alert("住所を入力してください")
       toast.error("住所を入力してください")
       return false
     }
@@ -106,13 +104,12 @@ export default function BuildingRegisterPage() {
       if(!res.ok) {
         const errorBody = await res.json()
         console.log("登録失敗", errorBody)
-        // alert("登録失敗")
         toast.error("登録失敗")
         return
       }
 
       const data = await res.json()
-      console.log("data", data.data.id)
+      // console.log("data", data.data.id)
 
       // alert("登録成功")
       toast.success("物件登録完了", {
