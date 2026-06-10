@@ -20,13 +20,22 @@
     font-weight: 600;
     border-bottom: 1px solid #e5e5e5;
 }
+.basicFieldTitle {
+    font-size: 16px;
+    font-weight: 400;
+}
 .inner {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    gap: 20px;
+}
+.leftInner {
+    display: grid;
+    gap: 8px;
 }
 .rightInner {
     display: grid;
+    /* justify-content: space-between; */
     gap: 8px;
 }
 .statusField {
@@ -57,13 +66,18 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
+    /* min-height: 400px; */
 }
 .equipmentList {
     display: flex;
     flex-wrap: wrap;
     gap: 4px;
     border: 1px solid #e5e5e5;
-    padding: 8px 12px;
+    border-radius: 12px;
+    padding: 12px 18px;
+    /* min-height: 200px; */
+    max-height: 200px;
+    overflow-x: auto;
 }
 .equipment {
     padding: 6px 8px;
@@ -80,6 +94,54 @@
   color: white;
   background: #3d75ef;
   border: 1px solid #2563eb;
+}
+.imageFieldInner {
+    display: grid;
+    gap: 12px;
+}
+.imageTitle {
+    font-size: 16px;
+    /* font-weight: 600; */
+}
+.imageSubTitle {
+    font-size: 14px;
+    color:  #828080;
+}
+.imageTitleField {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    border-bottom: 1px solid #e5e5e5;
+}
+.uploadArea {
+    border: 2px dashed #8b5cf6;
+    border-radius: 12px;
+    background: #f0eeeeb8;
+    padding: 30px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 8px;
+    cursor: pointer;
+}
+.uploadArea:hover {
+    filter: brightness(0.9);
+}
+.uploadLabel {
+    font-family: 18px;
+    font-weight: 600;
+    background: #8b5cf6;
+    color: #fff;
+    padding: 4px 16px;
+    border-radius: 12px;
+}
+.inputText {
+  font-size: 14px;
+  color: #828080
+}
+.hiddenInput {
+    display: none;
 }
 .button {
   width: 100px;

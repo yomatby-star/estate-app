@@ -4,6 +4,7 @@ import { authFetch } from "../../../api/authFetch"
 import { ROUTES, REGISTER_NAV } from "../../../routes/rouets"
 import styles from "./RoomRegisterPage.module.css"
 import { ENDPOINT_URL } from "../../../api/mixin/mixin"
+import { Upload } from "lucide-react"
 
 
 export default function RoomRegisterPage() {
@@ -44,6 +45,13 @@ export default function RoomRegisterPage() {
   const initialForm = {
     roomNumber: "",
     roomRent: "",
+    managementFee: "",
+    securityDeposit: "",
+    keyMoney: "",
+    floorPlan: "",
+    exclusiveArea: "",
+    numberFloors: "",
+    direction: "",
     roomStatus: "",
   }
 
@@ -58,6 +66,16 @@ export default function RoomRegisterPage() {
         :[...prev, equipment]
     )
   }
+
+  const validateChckerList = [
+    form.roomNumber,
+    form.roomRent,
+    form.managementFee,
+    form.floorPlan,
+    form.exclusiveArea,
+    form.numberFloors,
+    form.roomStatus
+  ]
 
   const validateForm = () => {
     if(!form.roomNumber.trim()) {
@@ -137,8 +155,8 @@ export default function RoomRegisterPage() {
           <div>物件名：{selectedBuildingId || "未選択"}</div>
         </div>
         <div className={styles.inner}>
-          <div className={styles.rightInner}>
-            <span>基本情報</span>
+          <div className={styles.leftInner}>
+            <span className={styles.basicFieldTitle}>基本情報</span>
             {INPUT_ITEMS.map(({ label, key, required }) => 
               <div key={key} className={styles.inputFields}>
                 <span className={styles.labelTitle}>{label}{required && " *"}</span>
@@ -173,23 +191,46 @@ export default function RoomRegisterPage() {
               </div>
             )}
           </div>
-          <div className={styles.equipmentArea}>
-            <span>設備</span>
-            <div className={styles.equipmentList}>
-              {EQUIPMENTS.map((equipment) => (
-                <button
-                  type="button"
-                  key={equipment}
-                  onClick={() => toggleEquipments(equipment)}
-                  className={
-                    equipments.includes(equipment)
-                      ? styles.equipmentActive
-                      : styles.equipment
-                  } 
-                >
-                  {equipment}
-                </button>
-              ))}
+
+          <div className={styles.rightInner}>
+            <div className={styles.imageFieldInner}>
+              <div className={styles.imageTitleField}>
+                <span className={styles.imageTitle}>部屋画像を登録してください</span>
+                <span className={styles.imageSubTitle}>間取り図・室内画像・設備等の画像を複数登録可能</span>
+              </div>
+              <label htmlFor="images-upload">
+                <div className={styles.uploadArea}>
+                  <input 
+                    id="images-upload"
+                    type="file"
+                    accept="image/*"
+                    className={styles.hiddenInput}
+                  />
+                  <Upload size={40} color="#8b5cf6"/>
+                  <span className={styles.uploadLabel}>ファイルを選択</span>
+                  <span className={styles.inputText}>JPG, PNG, WEBP（最大5MB）</span>
+                </div>
+              </label>
+            </div>
+
+            <div className={styles.equipmentArea}>
+              <span>設備</span>
+              <div className={styles.equipmentList}>
+                {EQUIPMENTS.map((equipment) => (
+                  <button
+                    type="button"
+                    key={equipment}
+                    onClick={() => toggleEquipments(equipment)}
+                    className={
+                      equipments.includes(equipment)
+                        ? styles.equipmentActive
+                        : styles.equipment
+                    } 
+                  >
+                    {equipment}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </div>
