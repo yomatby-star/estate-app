@@ -212,7 +212,7 @@ export default function RoomRegisterPage() {
             <div className={styles.imageFieldInner}>
               <div className={styles.imageFieldInnerHeader}>
                 <div className={styles.imageTitleField}>
-                  <span className={styles.imageTitle}>部屋画像を登録してください</span>
+                  <span className={styles.basicFieldTitle}>部屋画像を登録してください</span>
                   <span className={styles.imageSubTitle}>間取り図・室内画像・設備等の画像を複数登録可能</span>
                 </div>
                 <button
@@ -246,7 +246,7 @@ export default function RoomRegisterPage() {
             </div>
 
             <div className={styles.equipmentArea}>
-              <span>設備</span>
+              <span className={styles.basicFieldTitle}>設備</span>
               <div className={styles.equipmentList}>
                 {EQUIPMENTS.map((equipment) => (
                   <button
@@ -268,7 +268,7 @@ export default function RoomRegisterPage() {
         </div>
       </div>
       <div className={styles.buttonField}>
-        <button>リセット</button>
+        <button className={`${styles.button} ${styles.resetButton}`}>リセット</button>
         <button className={styles.button} onClick={onSave} disabled={isSaving}>保存</button>
       </div>
 
