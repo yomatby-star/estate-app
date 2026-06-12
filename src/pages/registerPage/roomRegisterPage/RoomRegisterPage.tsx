@@ -3,9 +3,11 @@ import { useNavigate, useSearchParams } from "react-router-dom"
 import { authFetch } from "../../../api/authFetch"
 import { ROUTES, REGISTER_NAV } from "../../../routes/rouets"
 import styles from "./RoomRegisterPage.module.css"
+import stylesDialog from "../../../componets/confirmDialog/ResetDialog.module.css"
 import { ENDPOINT_URL } from "../../../api/mixin/mixin"
 import { Upload } from "lucide-react"
 import toast from "react-hot-toast"
+
 
 
 export default function RoomRegisterPage() {
@@ -60,6 +62,7 @@ export default function RoomRegisterPage() {
   const [equipments, setEquipments] = useState<string[]>([])
   const [imagesFile, setImagesFile] = useState<File[]>([])
   const [isSaving, setIsSaving] = useState(false)
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false)
 
   const toggleEquipments = (equipment: string) => {
     setEquipments((prev) =>
@@ -207,9 +210,18 @@ export default function RoomRegisterPage() {
 
           <div className={styles.rightInner}>
             <div className={styles.imageFieldInner}>
-              <div className={styles.imageTitleField}>
-                <span className={styles.imageTitle}>部屋画像を登録してください</span>
-                <span className={styles.imageSubTitle}>間取り図・室内画像・設備等の画像を複数登録可能</span>
+              <div className={styles.imageFieldInnerHeader}>
+                <div className={styles.imageTitleField}>
+                  <span className={styles.imageTitle}>部屋画像を登録してください</span>
+                  <span className={styles.imageSubTitle}>間取り図・室内画像・設備等の画像を複数登録可能</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setIsPreviewOpen(true)}
+                  className={styles.countButton}
+                >
+                  画像添付件数：{imagesFile.length} 件
+                </button>
               </div>
               <label htmlFor="images-upload">
                 <div className={styles.uploadArea}>
@@ -259,6 +271,31 @@ export default function RoomRegisterPage() {
         <button>リセット</button>
         <button className={styles.button} onClick={onSave} disabled={isSaving}>保存</button>
       </div>
+
+      {isPreviewOpen && (
+        <div className={stylesDialog.overlay}>
+          <div className={stylesDialog.modal}>
+            <div className={styles.header}>
+              <h3>添付済み画像 <span className={styles.imagesCount}>{imagesFile.length}</span> 件</h3>
+              <div>
+                {/* <button className={styles.commonButton}>編集</button> */}
+                <button type="button" className={styles.commonButton} onClick={() => setIsPreviewOpen(false)}>閉じる</button>
+              </div>
+            </div>
+            
+            <div className={styles.imageList}>
+              {imagesFile.map((file, index) => (
+                <img 
+                  key={`${file.name}-${index}`}
+                  src={URL.createObjectURL(file)}
+                  alt={file.name}
+                  className={styles.previewImage}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>  
   )
 }

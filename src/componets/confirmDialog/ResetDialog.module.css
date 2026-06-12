@@ -9,11 +9,13 @@
 }
 .modal {
     width: 400px;
+    max-height: 700px;
     background: #fff;
     border: 1px solid #e5e5e5;
     border-radius: 12px;
     padding: 24px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.9);
+    /* overflow: auto; */
 }
 .buttonArea {
     display: flex;
