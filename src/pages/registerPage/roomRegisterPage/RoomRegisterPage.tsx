@@ -68,32 +68,22 @@ export default function RoomRegisterPage() {
   }
 
   const validateChckerList = [
-    form.roomNumber,
-    form.roomRent,
-    form.managementFee,
-    form.floorPlan,
-    form.exclusiveArea,
-    form.numberFloors,
-    form.roomStatus
-  ]
+    { key: "roomNumber", label: "部屋番号" },
+    { key: "roomRent", label: "家賃" },
+    { key: "managementFee", label: "管理費" },
+    { key: "floorPlan", label: "間取り" },
+    { key: "numberFloors", label: "階" },
+    { key: "roomStatus", label: "募集状況" },
+  ] as const
 
   const validateForm = () => {
-    if(!form.roomNumber.trim()) {
-      alert("部屋番号を入力してください")
+    const error = validateChckerList.find(
+      item => !String(form[item.key]).trim()
+    )
+    if(error) {
+      alert(`${error.label}を入力してください`)
       return false
     }
-
-    if(!form.roomRent.trim()) {
-      alert("家賃を入力してください")
-      return false
-    }
-
-    if(!form.roomStatus.trim()) {
-      alert("ステータスを選んでください")
-      return false
-    }
-
-    return true
   }
 
   const createPayload = () => {
