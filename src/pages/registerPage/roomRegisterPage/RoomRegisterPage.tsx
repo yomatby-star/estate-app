@@ -1,10 +1,11 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate, useSearchParams } from "react-router-dom"
 import { authFetch } from "../../../api/authFetch"
 import { ROUTES, REGISTER_NAV } from "../../../routes/rouets"
 import styles from "./RoomRegisterPage.module.css"
 import { ENDPOINT_URL } from "../../../api/mixin/mixin"
 import { Upload } from "lucide-react"
+import toast from "react-hot-toast"
 
 
 export default function RoomRegisterPage() {
@@ -57,6 +58,7 @@ export default function RoomRegisterPage() {
 
   const [form, setForm] = useState(initialForm)
   const [equipments, setEquipments] = useState<string[]>([])
+  const [imagesFile, setImagesFile] = useState<File[]>([])
   const [isSaving, setIsSaving] = useState(false)
 
   const toggleEquipments = (equipment: string) => {
@@ -90,8 +92,15 @@ export default function RoomRegisterPage() {
     return {
       building_id: buildingId,
       room: {
-        roomNumber: Number(form.roomNumber),
+        roomNumber: form.roomNumber,
         rent: Number(form.roomRent),
+        managementFee: Number(form.managementFee),
+        securityDeposit: Number(form.securityDeposit),
+        keyMoney: Number(form.keyMoney),
+        floorPlan: form.floorPlan,
+        exclusiveArea: form.exclusiveArea,
+        numberFloors: form.numberFloors,
+        direction: form.direction,
         status: form.roomStatus
       }
     }
@@ -104,29 +113,37 @@ export default function RoomRegisterPage() {
       setIsSaving(true)
 
       const payload = createPayload()
+      const formData = new FormData()
+
+      formData.append("payload", JSON.stringify(payload))
+
+      imagesFile.forEach(file => {
+        formData.append("files", file)
+      })
 
       const res = await authFetch(ENDPOINT, {
         method: "post",
-        body: JSON.stringify(payload),
-        headers: {
-          "Content-Type": "application/json"
-        }
+        body: formData
       })
 
       if(!res.ok) {
-        const errorBody = res.json()
+        const errorBody = await res.json()
         console.log("部屋登録に失敗:", errorBody)
-        alert("部屋登録に失敗")
+        toast.error("部屋登録に失敗")
         return
       }
 
       // const data = await res.json()
       // console.log("RoomData", data.data.id)
 
-      alert("部屋登録に成功")
+      toast.success("部屋登録に成功", {
+        duration: 6000,
+      })
       setForm(initialForm)
+      setImagesFile([])
 
       navigate(`${ROUTES.register}/${REGISTER_NAV.owner}?buildingId=${buildingId}`)
+
     } catch (error) {
       console.log("通信エラー:", error)
       alert("通信エラーが発生しました")
@@ -135,6 +152,12 @@ export default function RoomRegisterPage() {
       setIsSaving(false)
     }
   }
+
+  // 投入画像確認用
+  useEffect(() => {
+    console.log("投入画像件数:", imagesFile.length)
+    console.log("投入画像:", imagesFile)
+  }, [imagesFile])
 
 
   return (
@@ -194,7 +217,14 @@ export default function RoomRegisterPage() {
                     id="images-upload"
                     type="file"
                     accept="image/*"
+                    multiple
                     className={styles.hiddenInput}
+                    onChange={(e) => {
+                      const files = Array.from(e.target.files ?? [])
+                      console.log("files:", files.length)
+                      console.log("画像一覧:", files)
+                      setImagesFile(prev => [...prev, ...files])
+                    }}
                   />
                   <Upload size={40} color="#8b5cf6"/>
                   <span className={styles.uploadLabel}>ファイルを選択</span>
