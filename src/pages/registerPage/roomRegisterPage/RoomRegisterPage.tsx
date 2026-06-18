@@ -89,6 +89,7 @@ export default function RoomRegisterPage() {
       alert(`${error.label}を入力してください`)
       return false
     }
+    return true
   }
 
   const createPayload = () => {
@@ -104,7 +105,8 @@ export default function RoomRegisterPage() {
         exclusiveArea: form.exclusiveArea,
         numberFloors: form.numberFloors,
         direction: form.direction,
-        status: form.roomStatus
+        status: form.roomStatus,
+        equipments: equipments
       }
     }
   }
@@ -144,6 +146,7 @@ export default function RoomRegisterPage() {
       })
       setForm(initialForm)
       setImagesFile([])
+      setEquipments([])
 
       navigate(`${ROUTES.register}/${REGISTER_NAV.owner}?buildingId=${buildingId}`)
 

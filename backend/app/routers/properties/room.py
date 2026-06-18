@@ -1,5 +1,6 @@
 import logging
-from fastapi import APIRouter, Depends, status, HTTPException
+import json
+from fastapi import APIRouter, Depends, status, HTTPException, File, Form, UploadFile
 
 from app.dependencies.auth import get_current_user
 from app.schemas.room import RoomCreateRequest
@@ -10,12 +11,22 @@ router = APIRouter(prefix="/api/v1/roomRegister", tags=["roomRegister"])
 
 @router.post("", status_code=status.HTTP_201_CREATED)
 async def create_property_room(
-  request: RoomCreateRequest,
+  payload: str = Form(...),
+  files: list[UploadFile] = File(default=[]),
   current_user: dict = Depends(get_current_user)
 ) -> dict:
+  
   try:
+    request = RoomCreateRequest.model_validate(
+      json.loads(payload)
+    )
+
+    print(request.model_dump())
+    print(len(files))
+
     data = create_room(
       request,
+      files,
       uid=current_user["uid"]
     )
 
