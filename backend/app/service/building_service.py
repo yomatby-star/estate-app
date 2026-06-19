@@ -19,7 +19,6 @@ def create_building(
   if file:
     image_data = upload_building_image(
       file=file,
-      uid=uid,
       building_id=doc_ref.id
     )
     images.append(image_data)
