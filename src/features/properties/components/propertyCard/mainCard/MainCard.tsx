@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom"
 import type { Property } from "../../../../../mocks/properties/mock" 
 import { ROUTES } from "../../../../../routes/rouets"
-import styles from "./MainCard.module.css"
 import noImage from "../../../../../assets/no_image.jpeg"
 import { Building2 ,Train } from "lucide-react"
+import styles from "./MainCard.module.css"
 
 type Props = {
   property: Property;

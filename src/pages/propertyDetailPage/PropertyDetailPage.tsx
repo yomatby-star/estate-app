@@ -1,7 +1,9 @@
 import { useOutletContext } from "react-router-dom"
-import styles from "./PropertyDetailPage.module.css"
 import { useEffect, useState } from "react"
 import type { Property } from "../../mocks/properties/mock"
+import { getImages } from "../../api/getProperties/getImages"
+import styles from "./PropertyDetailPage.module.css"
+
 
 type OutletContext = {
   property: Property | undefined,
@@ -11,14 +13,14 @@ type OutletContext = {
 export default function PropertyDetailPage() {
   const [i, setI] = useState(0)
   const { property, isEditMode } = useOutletContext<OutletContext>()
-
+  // console.log("⭐️:", property)
   if (!property) {
     return <div>該当する物件がありません</div>
   }
 
   const defaultForm = {
     name: property?.basic.name ?? "",
-    addr: property?.basic.addr ?? "",
+    addr: property?.common.addr ?? "",
     structure: property?.common.structure ?? "",
     mansionType: property?.common.mansionType ?? "",
     local: property?.common.local ?? "",
@@ -31,6 +33,7 @@ export default function PropertyDetailPage() {
   }
 
   const [form, setForm] = useState(defaultForm)
+  const [photos, setPhotos] = useState<string[]>([])
   
   useEffect(() => {
     if(!isEditMode) {
@@ -54,17 +57,33 @@ export default function PropertyDetailPage() {
     {label: "ゴミ置き場", key: "garbage", value: form.garbage},
   ] as const
 
-  const vacantRoomStatus = property.roomStatus.filter((r) => r.status === "vacant")
-  const closedRoomStatus = property.roomStatus.filter((r) => r.status === "closed")
+  // const vacantRoomStatus = property.roomStatus.filter((r) => r.status === "vacant")
+  // const closedRoomStatus = property.roomStatus.filter((r) => r.status === "closed")
 
   // photoの処理
-  const photo = property.images
-  const hasImage = photo.length > 0
-  const prevPhoto = () => setI((v) => (v - 1 + photo.length) % photo.length)
-  const nextPhoto = () => setI((v) => (v + 1) % photo.length)
+  useEffect(() => {
+    const fetchImages = async () => {
+      if (!property.images) return
+
+      const urls = await Promise.all(
+        property.images.map(async (image) => {
+          const data = await getImages(image.image_key)
+          return data.url
+        })
+      )
+
+      setPhotos(urls)
+    }
+
+    fetchImages()
+  }, [property.images])
+
+  const hasImage = photos.length > 0
+  const prevPhoto = () => setI((v) => (v - 1 + photos.length) % photos.length)
+  const nextPhoto = () => setI((v) => (v + 1) % photos.length)
 
   // Google Map の処理
-  const address = property.basic.addr
+  const address = property.common.addr
   const q = encodeURIComponent(address);
   const mapSrc = `https://www.google.com/maps?hl=ja&q=${q}&output=embed`;
 
@@ -123,7 +142,8 @@ export default function PropertyDetailPage() {
           ))}
         </div>
         <div className={`${styles.card} ${styles.vacantRoomField}`}>
-          <div className={styles.row}>
+          {/* ここに設備表示する */}
+          {/* <div className={styles.row}>
             <div className={styles.vacantTitle}>空室：</div>
               <div className={styles.roomStatusButtonField}>
                 {vacantRoomStatus.map((room) => 
@@ -142,7 +162,7 @@ export default function PropertyDetailPage() {
                 </button>
               )}
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 
@@ -150,7 +170,7 @@ export default function PropertyDetailPage() {
         <div className={styles.card}>
           {hasImage ? (
             <>
-              <img className={styles.photo} src={photo[i]} alt={`物件画像${i}`} />
+              <img className={styles.photo} src={photos[i]} alt={`物件画像${i}`} />
               <button type="button" onClick={prevPhoto} className={`${styles.ImageButton} ${styles.imagePrev}`}>＜</button>
               <button type="button" onClick={nextPhoto} className={`${styles.ImageButton} ${styles.imageNext}`}>＞</button>
             </>

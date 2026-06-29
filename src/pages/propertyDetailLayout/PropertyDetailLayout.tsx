@@ -1,11 +1,14 @@
-import { NavLink, Outlet, useParams } from "react-router-dom"
+import { NavLink, Outlet, useParams, useOutletContext } from "react-router-dom"
 import { PROPERTY_NAV, ROUTES } from "../../routes/rouets"
-import styles from "./PropertyDetailLayout.module.css"
 import { useState } from "react"
+import type { Property } from "../../mocks/properties/mock"
+import styles from "./PropertyDetailLayout.module.css"
+
 
 export default function PropertyDetailLayout() {
   const { id } = useParams()
-  // const property = mockProperties.find((p) => p.id === id)
+  const { properties } = useOutletContext<{ properties: Property[] }>()
+  const property = properties.find((p) => p.id === id)
   const [isEditMode, setIsEditMode] = useState(false)
   const tabItems = [
     { label: "物件詳細", to: `${ROUTES.property}/${id}`},
@@ -50,7 +53,7 @@ export default function PropertyDetailLayout() {
       </div>
 
       <div className={styles.outletArea}>
-        {/* <Outlet context={{ property, isEditMode }} /> */}
+        <Outlet context={{ property, isEditMode }} />
       </div>
     </div>
   )
