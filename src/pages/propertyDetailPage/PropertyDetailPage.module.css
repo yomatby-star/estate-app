@@ -3,31 +3,39 @@
   grid-template-columns: 1fr 1fr;
   gap: 20px;
   height: 100%;
-  overflow: hidden;
+  /* overflow-y: auto; */
 }
-
 .leftContent {
-  height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  height: 100%; 
+  gap: 10px;
+  min-height: 500px; 
 }
-
-/* .buildingNameField {
-  background: #fff;
-  border-radius: 10px;
-  padding: 0 16px;
-  box-shadow: 0 4px 8px rgba(124, 124, 125, 0.728);
-} */
-
+.buildingNameField {
+  display: grid;
+  gap: 10px;
+  padding: 4px 0;
+  /* border: 1px solid red; */
+  /* box-shadow: 0 4px 8px rgba(124, 124, 125, 0.728); */
+}
 .buildingName {
-  border-bottom: 1px solid #e5e5e5;
-  margin: 0 0 8px 0;
+  border-bottom: 1px solid #a5a4a4;
+  margin: 0 0 16px 0;
+  padding-bottom: 6px;
+  font-size: 24px;
+}
+.editMode {
+  width: 100%;
+  border: 1px solid #c8c7c7;
+  padding: 2px 6px;
 }
 .card {
   position: relative;
-  display: grid;
-  gap: 10px;
+  flex: 1;
+  /* max-height: 800px; */
+  /* display: grid; */
+  /* gap: 3px; */
   background: #fff;
   border-radius: 12px;
   padding: 10px 16px;
@@ -38,6 +46,8 @@
   align-items: center;
   /* justify-content: start; */
   gap: 20px;
+  border-bottom: 1px solid #a5a4a4;
+  padding-bottom: 6px;
   width: 100%;
 }
 .labelTitle {
@@ -47,11 +57,12 @@
   padding: 0 6px;
   font-size: 16px;
   font-weight: 500;
+  text-align: center;
 }
 .valueContent {
   font-size: 16px;
   width: 100%;
-  border-bottom: 1px solid #9c9b9b;
+  /* border-bottom: 1px solid #9c9b9b; */
 }
 .vacantRoomField {
   display: grid;
@@ -125,13 +136,10 @@
 }
 .photo {
   width: 100%;
-  height: 260px;
+  height: 300px;
   object-fit: contain;
 }
 .maps {
   width: 100%;
   height: 260px;
-}
-.editInput {
-  width: 100%;
 }

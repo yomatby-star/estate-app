@@ -2,6 +2,7 @@ import { useOutletContext } from "react-router-dom"
 import { useEffect, useState } from "react"
 import type { Property } from "../../mocks/properties/mock"
 import { getImages } from "../../api/getProperties/getImages"
+import noImage from "../../assets/no_image.jpeg"
 import styles from "./PropertyDetailPage.module.css"
 
 
@@ -91,80 +92,79 @@ export default function PropertyDetailPage() {
     <div className={styles.stack}>
       <div className={styles.leftContent}>
         <div className={styles.card}>
-          <div className={styles.buildingNameField}>
+          <div className={styles.buildingName}>
             {isEditMode ? (
               <input 
                 value={form.name}
+                className={styles.editMode}
                 onChange={(e) => setForm((prev) => ({
                   ...prev,
                   name: e.target.value
                 }))}
               />
-            ) : <h2 className={styles.buildingName}>{form.name}</h2>}
+            ) : <strong>{form.name}</strong>}
           </div>
 
-          {commonRow.map(({label, key, value}) => (
-            <div key={label} className={styles.labelVal}>
-              <div className={styles.labelTitle}>{label}</div>
-              <div className={styles.valueContent}>
-                {isEditMode ? (
-                  <input
-                    className={styles.editInput}
-                    value={value ?? ""}
-                    onChange={(e) => setForm((prev) => ({
-                      ...prev,
-                      [key]: e.target.value
-                    }))}
-                  />
-                ) : value}
+          <div className={styles.buildingNameField}>
+            {commonRow.map(({label, key, value}) => (
+              <div key={label} className={styles.labelVal}>
+                <div className={styles.labelTitle}>{label}</div>
+                <div className={styles.valueContent}>
+                  {isEditMode ? (
+                    <input
+                      className={styles.editMode}
+                      value={value ?? ""}
+                      onChange={(e) => setForm((prev) => ({
+                        ...prev,
+                        [key]: e.target.value
+                      }))}
+                    />
+                  ) : value}
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-
-        <div className={styles.card}>
-          {commonSecRow.map(({label, key, value}) => (
-            <div key={label} className={styles.labelVal}>
-              <div className={styles.labelTitle}>{label}</div>
-              <div className={styles.valueContent}>
-                {isEditMode ? (
-                  <input
-                    className={styles.editInput}
-                    value={value ?? ""}
-                    onChange={(e) => setForm((prev) => ({
-                      ...prev,
-                      [key]: e.target.value
-                    }))}
-                  />
-                ) : value}
+            ))}
+            {commonSecRow.map(({label, key, value}) => (
+              <div key={label} className={styles.labelVal}>
+                <div className={styles.labelTitle}>{label}</div>
+                <div className={styles.valueContent}>
+                  {isEditMode ? (
+                    <input
+                      className={styles.editMode}
+                      value={value ?? ""}
+                      onChange={(e) => setForm((prev) => ({
+                        ...prev,
+                        [key]: e.target.value
+                      }))}
+                    />
+                  ) : value}
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-        <div className={`${styles.card} ${styles.vacantRoomField}`}>
-          {/* ここに設備表示する */}
-          {/* <div className={styles.row}>
-            <div className={styles.vacantTitle}>空室：</div>
-              <div className={styles.roomStatusButtonField}>
-                {vacantRoomStatus.map((room) => 
-                  <button key={room.roomNumber} className={styles.roomStatusButton}>
-                    {room.roomNumber}
-                  </button>
-                )}
-              </div>
+            ))}
           </div>
-          <div className={styles.row}>
-            <span className={styles.closedTitle}>募集停止中：</span>
-            <div className={styles.roomStatusButtonField}>
-              {closedRoomStatus.map((room) => 
-                <button key={room.roomNumber} className={styles.roomStatusButton}>
-                  {room.roomNumber}
-                </button>
-              )}
-            </div>
-          </div> */}
+            {/* <div className={`${styles.card} ${styles.vacantRoomField}`}> */}
+              {/* ここに設備表示する */}
+              {/* <div className={styles.row}>
+                <div className={styles.vacantTitle}>空室：</div>
+                  <div className={styles.roomStatusButtonField}>
+                    {vacantRoomStatus.map((room) => 
+                      <button key={room.roomNumber} className={styles.roomStatusButton}>
+                        {room.roomNumber}
+                      </button>
+                    )}
+                  </div>
+              </div>
+              <div className={styles.row}>
+                <span className={styles.closedTitle}>募集停止中：</span>
+                <div className={styles.roomStatusButtonField}>
+                  {closedRoomStatus.map((room) => 
+                    <button key={room.roomNumber} className={styles.roomStatusButton}>
+                      {room.roomNumber}
+                    </button>
+                  )}
+                </div>
+              </div> */}
+          </div>
         </div>
-      </div>
 
       <div className={styles.rightContent}>
         <div className={styles.card}>
@@ -175,7 +175,8 @@ export default function PropertyDetailPage() {
               <button type="button" onClick={nextPhoto} className={`${styles.ImageButton} ${styles.imageNext}`}>＞</button>
             </>
           ) : 
-            <div>NO IMAGES</div>
+            // <div className={styles.photo}>NO IMAGES</div>
+            <img src={noImage} className={styles.photo} alt="建物写真" />
           }
         </div>
 

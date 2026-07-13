@@ -3,7 +3,7 @@
 // import roomPhoto from "../../../public/ai_20241220_05.jpg"
 // import roomPhotoItem from "../../../public/3ldkdemo.jpg"
 
-// type Status = "vacant" | "closed"
+type Status = "vacant" | "closed" | "applying"
 type MansionType = "マンション" | "アパート" | "テナント" | "ビル"
 type Structure = "鉄筋コンクリート" | "木造" | "鉄骨" | "軽量鉄骨"
 
@@ -24,24 +24,6 @@ export type Property = {
     floors: string;
     year: string;
   };
-  // roomStatus: {
-  //   roomNumber: string;
-  //   status: Status;
-  //   basic: {
-  //     type: string;
-  //     occupiedArea: string;
-  //     roomFloor: string;
-  //   };
-  //   equipment: string[];
-  //   conditions: {
-  //     rent: string;
-  //     managementFee: string;
-  //     reikin: string;
-  //     shikikin: string;
-  //   },
-  //   photo: string[];
-  // }[];
-  // image: string;
   images: [
     {
       content_type: string;
@@ -51,6 +33,23 @@ export type Property = {
   ],
   imageUrl: string,
 }
+
+export type Room = {
+  id: string;
+  uid: string;
+  roomNumber: string;
+  direction: string;
+  status: Status;
+  exclusiveArea: string;
+  equipments: string[];
+  floorPlan: string;
+  keyMoney: number;
+  managementFee: number;
+  numberFloors: string;
+  rent: number;
+  securityDeposit: number;
+  // photo: string[];
+};
 
 // export const mockProperties: Property[] = [
 //   {

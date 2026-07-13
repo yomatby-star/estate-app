@@ -1,10 +1,10 @@
-import type { Property } from "../../../../mocks/properties/mock"
+import type { Property, Room } from "../../../../mocks/properties/mock"
 import styles from "./RoomDetail.module.css"
 
-type RoomStatus = Property["roomStatus"][number]
+// type RoomStatus = Property["roomStatus"][number]
 
 type Props = {
-  selectedRoom: RoomStatus | null
+  selectedRoom: Room | null
 }
 
 export default function RoomDetail({ selectedRoom }: Props) {
@@ -25,16 +25,16 @@ export default function RoomDetail({ selectedRoom }: Props) {
 
   const basic = [
     { label: "部屋番号", value: `${selectedRoom?.roomNumber} 号室` },
-    { label: "タイプ", value: `${selectedRoom?.basic.type}` },
-    { label: "専有面積", value: `${selectedRoom?.basic.occupiedArea} ㎡` },
-    { label: "階数", value: `${selectedRoom?.basic.roomFloor} 階` },
+    { label: "タイプ", value: `${selectedRoom?.floorPlan}` },
+    { label: "専有面積", value: `${selectedRoom?.exclusiveArea} ㎡` },
+    { label: "階数", value: `${selectedRoom?.numberFloors} 階` },
   ]
 
   const conditions = [
-    { label: "賃料", value: selectedRoom?.conditions.rent, suffix: "/ 月"},
-    { label: "管理費", value: selectedRoom?.conditions.managementFee, suffix: "/ 月"},
-    { label: "礼金", value: selectedRoom?.conditions.reikin,},
-    { label: "敷金", value: selectedRoom?.conditions.shikikin},
+    { label: "賃料", value: selectedRoom?.rent, suffix: "/ 月"},
+    { label: "管理費", value: selectedRoom?.managementFee, suffix: "/ 月"},
+    { label: "礼金", value: selectedRoom?.keyMoney},
+    { label: "敷金", value: selectedRoom?.securityDeposit},
   ]
 
   return (
@@ -56,7 +56,7 @@ export default function RoomDetail({ selectedRoom }: Props) {
           <div className={styles.cardTitle}>設備</div>
         </div>
         <div className={styles.equipmentItemField}>
-          {selectedRoom?.equipment.map((i, idx) => 
+          {selectedRoom?.equipments.map((i, idx) => 
             <span key={idx} className={styles.equipmentItem}>{i}</span>
           )}
         </div>
