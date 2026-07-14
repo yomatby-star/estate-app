@@ -42,3 +42,14 @@
 .nextButton {
   right: 12px;
 }
+.imageCount {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 4px 10px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  font-size: 14px;
+}

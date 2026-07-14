@@ -48,7 +48,14 @@ export type Room = {
   numberFloors: string;
   rent: number;
   securityDeposit: number;
-  // photo: string[];
+  images: [
+    {
+      content_type: string;
+      file_name: string;
+      image_key: string;
+    }
+  ];
+  imageUrls?: string[]
 };
 
 // export const mockProperties: Property[] = [
