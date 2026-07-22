@@ -1,0 +1,71 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+.modal {
+    width: 1200px;
+    max-height: 700px;
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.9);
+    /* overflow: auto; */
+}
+.dialogContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.dialogHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.dialogMain {
+    display: grid;
+    grid-template-columns: 0.3fr 1fr;
+}
+.dialogContainer {
+    border: 1px solid #e5e5e5;
+    padding: 20px;
+}
+.saveButtonArea {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 12px;
+}
+
+/* .buttonArea {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+}
+.confirmButton {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.confirmButton:hover{ 
+    filter: brightness(0.9);
+}
+.resetButton {
+    background: #f26832;
+    color: #fff;
+}
+.title {
+    font-size: 18px;
+}
+.message {
+    font-size: 16px;
+    border-bottom: 1px solid #e5e5e5;
+    padding-bottom: 4px;
+} */
