@@ -2,11 +2,13 @@ import { useEffect, useState } from "react"
 import { useNavigate, useSearchParams } from "react-router-dom"
 import { authFetch } from "../../../api/authFetch"
 import { ROUTES, REGISTER_NAV } from "../../../routes/rouets"
-import styles from "./RoomRegisterPage.module.css"
-import stylesDialog from "../../../componets/confirmDialog/ResetDialog.module.css"
 import { ENDPOINT_URL } from "../../../api/mixin/mixin"
 import { Upload } from "lucide-react"
+import { getRoom } from "../../../api/getRooms/getRoom"
 import toast from "react-hot-toast"
+import styles from "./RoomRegisterPage.module.css"
+import stylesDialog from "../../../componets/confirmDialog/ResetDialog.module.css"
+
 
 
 
@@ -14,6 +16,10 @@ export default function RoomRegisterPage() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const buildingId = searchParams.get("buildingId")
+  const copyRoomId = searchParams.get("copyRoomId")
+  console.log("buildingId", buildingId)
+  console.log("copyRoomId", copyRoomId)
+
   const [selectedBuildingId, setSelectedBuildingId ] = useState(buildingId ?? "")
 
   const ENDPOINT = `${ENDPOINT_URL}/api/v1/roomRegister`
@@ -134,7 +140,7 @@ export default function RoomRegisterPage() {
       if(!res.ok) {
         const errorBody = await res.json()
         console.log("部屋登録に失敗:", errorBody)
-        toast.error("部屋登録に失敗")
+        toast.error(errorBody.detail)
         return
       }
 
@@ -164,6 +170,32 @@ export default function RoomRegisterPage() {
     console.log("投入画像件数:", imagesFile.length)
     console.log("投入画像:", imagesFile)
   }, [imagesFile])
+
+  // 部屋複製用の処理
+  useEffect(() => {
+    if(!copyRoomId) return
+    
+    const fetchRoom = async () => {
+      const room = await getRoom(copyRoomId)
+      console.log("取得済部屋情報:", room)
+
+      setEquipments(room.equipments ?? [])
+      setForm({
+        roomNumber: room.roomNumber ?? "",
+        roomRent: String(room.rent ?? ""),
+        managementFee: String(room.managementFee ?? ""),
+        securityDeposit: String(room.securityDeposit ?? ""),
+        keyMoney: String(room.keyMoney ?? ""),
+        floorPlan: room.floorPlan ?? "",
+        exclusiveArea: String(room.exclusiveArea ?? ""),
+        numberFloors: String(room.numberFloors ?? ""),
+        direction: room.direction ?? "",
+        roomStatus: room.status ?? "",
+      })
+    }
+
+    fetchRoom()
+  }, [copyRoomId])
 
 
   return (

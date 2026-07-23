@@ -9,7 +9,7 @@ export const ROUTES = {
 export const NAVE_ITEMS = [
   { path: ROUTES.register, label: "新規登録", icon: FilePlus },
   { path: ROUTES.property, label: "物件一覧", icon: Building2 },
-  { path: ROUTES.tenants, label: "入居者", icon: User },
+  // { path: ROUTES.tenants, label: "入居者", icon: User },
 ] as const
 
 export const REGISTER_NAV = {

@@ -1,5 +1,5 @@
 from datetime import datetime, timezone
-from fastapi import UploadFile
+from fastapi import UploadFile, HTTPException
 from app.core.firebase_admin import get_firebase_client
 from app.schemas.room import RoomCreateRequest
 from app.service.room_image_service import upload_room_image
@@ -12,6 +12,17 @@ def create_room(
   db = get_firebase_client()
   room_ref = db.collection("rooms").document()
   now = datetime.now(timezone.utc)# 共通化
+
+  # 重複部屋チェック
+  duplicate_docs = list(
+    db.collection("rooms")
+    .where("building_id", "==", request.building_id)
+    .where("roomNumber", "==", request.room.roomNumber)
+    .stream()
+  )
+
+  if duplicate_docs:
+    raise HTTPException(status_code=400, detail=f"部屋番号：{request.room.roomNumber} はすでに登録されています。")
 
   images = []
 

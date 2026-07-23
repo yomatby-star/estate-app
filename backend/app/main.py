@@ -42,5 +42,5 @@ app.include_router(getProperties.router)
 # 画像用
 app.include_router(getImageUrl.router)
 
-# 部屋情報　取得
+# 複数部屋情報　取得
 app.include_router(getRooms.router)

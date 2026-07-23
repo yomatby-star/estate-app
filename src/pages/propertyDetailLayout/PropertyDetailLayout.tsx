@@ -98,6 +98,8 @@ export default function PropertyDetailLayout() {
         open={isRoomDetailOpen}
         onClose={() => setIsRoomDetailOpen(false)}
         buildingName={property?.basic.name ?? ""}
+        buildingId={id ?? ""}
+        rooms={rooms}
       />
     </div>
   )

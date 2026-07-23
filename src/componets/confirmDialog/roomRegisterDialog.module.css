@@ -41,6 +41,11 @@
     justify-content: end;
     gap: 12px;
 }
+.mainContent {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
 
 /* .buttonArea {
     display: flex;

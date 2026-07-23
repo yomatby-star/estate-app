@@ -109,7 +109,7 @@ export default function BuildingRegisterPage() {
       }
 
       const data = await res.json()
-      // console.log("data", data.data.id)
+      console.log("data", data.data.id)
 
       // alert("登録成功")
       toast.success("物件登録完了", {

@@ -34,6 +34,10 @@ async def create_property_room(
       "message": "部屋登録成功",
       "data": data
     }
+
+  except HTTPException:
+    raise
+  
   except Exception:
     logger.exception("部屋登録処理でエラーが発生しました")
     raise HTTPException(

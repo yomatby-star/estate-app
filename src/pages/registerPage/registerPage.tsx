@@ -6,7 +6,7 @@ export default function registerPage() {
   const tabItems = [
     { label: "物件登録", to: `${REGISTER_NAV.building}` },
     { label: "部屋登録", to: `${REGISTER_NAV.room}` },
-    { label: "オーナー登録", to: `${REGISTER_NAV.owner}` },
+    // { label: "オーナー登録", to: `${REGISTER_NAV.owner}` },
   ]
   return (
     <div className={styles.route}>
