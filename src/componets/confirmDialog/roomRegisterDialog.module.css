@@ -9,7 +9,7 @@
 }
 .modal {
     width: 1200px;
-    max-height: 700px;
+    max-height: 800px;
     background: #fff;
     border: 1px solid #e5e5e5;
     border-radius: 12px;
@@ -27,14 +27,51 @@
     align-items: center;
     justify-content: space-between;
 }
+
+/* タイトル */
+.buildingNameTitle {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.navItem {
+  border: 1px solid #636262c0;
+  border-radius: 12px;
+  background: #e5e5e5;
+  color: #000;
+  padding: 6px 12px;
+  font-size: 16px;
+  font-weight: 600;
+}
+.navItem:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.9);
+}
+.active {
+  background: rgb(109, 59, 218);
+  color: #fff;
+}
+
 .dialogMain {
-    display: grid;
-    grid-template-columns: 0.3fr 1fr;
+    /* display: grid;
+    grid-template-columns: 0.3fr 1fr; */
+    display: flex;
+    flex-direction: column;
 }
 .dialogContainer {
     border: 1px solid #e5e5e5;
     padding: 20px;
 }
+/* select */
+.roomSelectArea {
+    display: inline-block;
+    width: 160px;
+    border: 1px solid #646464;
+    border-radius: 10px;
+    padding: 4px 8px;
+    font-size: 18px;
+
+}
+
 .saveButtonArea {
     display: flex;
     align-items: center;
@@ -42,10 +79,51 @@
     gap: 12px;
 }
 .mainContent {
-    display: flex;
+    /* display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 6px; */
+    display: grid;
+    grid-template-columns: 0.1fr 1fr;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid #a5a4a4;
+    padding-bottom: 8px;
 }
+
+/* ラベルフィールド */
+.labalField {
+    display: flex;
+    flex-direction: column;
+    
+    gap: 4px;
+}
+/* ラベル */
+.labal {
+    text-align: center;
+    grid-template-columns: 0.3 1fr;
+    background: #515050;
+    border-radius: 10px;
+    color: #fff;
+    padding: 4px 12px;
+}
+
+/* キャンセル　ボタン　 */
+.confirmButton {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.confirmButton:hover{ 
+    filter: brightness(0.9);
+}
+/* 複製して修正　ボタン */
+.openDialogButton {
+    background: #4166ed;
+    color: #fff;
+}
+
+
 
 /* .buttonArea {
     display: flex;

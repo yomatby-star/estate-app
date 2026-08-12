@@ -41,13 +41,14 @@ export default function RoomRegisterDialog({ open, onClose, buildingName, buildi
             <div className={styles.modal}>
                 <div className={styles.dialogContainer}>
                     <div className={styles.dialogHeader}>
-                        <div>{buildingName}</div>
-                        <button onClick={onClose}>閉じる</button>
+                        <div className={styles.buildingNameTitle}>{buildingName}</div>
+                        <button onClick={onClose} className={styles.navItem}>閉じる</button>
                     </div>
                     <div className={styles.dialogMain}>
                         <div className={styles.dialogContainer}>
                             <select
                                 value={selectedRoomId}
+                                className={styles.roomSelectArea}
                                 onChange={(e) => setSelectedRoomId(e.target.value)}    
                             >
                                 {rooms.map((room) => (
@@ -62,10 +63,10 @@ export default function RoomRegisterDialog({ open, onClose, buildingName, buildi
                         </div>
                         <div className={styles.dialogContainer}>
                             {/* 左で選択された部屋の情報を入力 */}
-                            <div>
+                            <div className={styles.labalField}>
                                 {roomFields.map((field) => (
                                     <div key={field.key} className={styles.mainContent}>
-                                        <label>{field.label}</label>
+                                        <label className={styles.labal}>{field.label}</label>
                                         <div>{selectedRoom?.[field.key] ?? "-"}</div>
                                     </div>
                                 ))}
@@ -73,9 +74,10 @@ export default function RoomRegisterDialog({ open, onClose, buildingName, buildi
                         </div>
                     </div>
                     <div className={styles.saveButtonArea}>
-                        <button onClick={onClose}>キャンセル</button>
+                        <button onClick={onClose} className={styles.confirmButton}>キャンセル</button>
                         <button 
                             type="button"
+                            className={`${styles.confirmButton} ${styles.openDialogButton}`}
                             onClick={() => 
                                 navigate(`${ROUTES.register}/${REGISTER_NAV.room}?buildingId=${buildingId}&copyRoomId=${selectedRoomId}`)
                             }
