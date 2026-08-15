@@ -8,8 +8,8 @@
     z-index: 9999;
 }
 .modal {
-    width: 1200px;
-    max-height: 800px;
+    width: 600px;
+    max-height: 700px;
     background: #fff;
     border: 1px solid #e5e5e5;
     border-radius: 12px;
@@ -21,6 +21,8 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    border: 1px solid #e5e5e5;
+    padding: 20px;
 }
 .dialogHeader {
     display: flex;
@@ -56,10 +58,7 @@
     grid-template-columns: 0.3fr 1fr; */
     display: flex;
     flex-direction: column;
-}
-.dialogContainer {
-    border: 1px solid #e5e5e5;
-    padding: 20px;
+    gap: 20px;
 }
 /* select */
 .roomSelectArea {
@@ -72,6 +71,38 @@
 
 }
 
+/* Main */
+.mainContainer {
+    max-height: 400px;
+    overflow: scroll;
+    border: 1px solid #b3b3b3;
+    border-radius: 8px;
+    padding: 8px 12px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.basicLabel {
+    border-bottom: 1px solid #595959;
+    padding-bottom: 8px;
+}
+
+.equipmentsFields {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 6px;
+    text-align: center;
+}
+.equipmentItem {
+    padding: 6px 8px;
+    border-radius: 20px;
+    cursor: pointer;
+    color: white;
+    background: #3d75ef;
+    border: 1px solid #2563eb;
+}
+
 .saveButtonArea {
     display: flex;
     align-items: center;
@@ -79,32 +110,33 @@
     gap: 12px;
 }
 .mainContent {
-    /* display: flex;
-    align-items: center;
-    gap: 6px; */
     display: grid;
-    grid-template-columns: 0.1fr 1fr;
+    grid-template-columns: 0.4fr 1fr;
     align-items: center;
-    gap: 10px;
-    border-bottom: 1px solid #a5a4a4;
+    gap: 6px;
+    /* border-bottom: 1px solid #a5a4a4; */
     padding-bottom: 8px;
 }
 
 /* ラベルフィールド */
 .labalField {
-    display: flex;
+    /* display: flex;
     flex-direction: column;
-    
-    gap: 4px;
+    gap: 4px; */
 }
 /* ラベル */
 .labal {
     text-align: center;
-    grid-template-columns: 0.3 1fr;
     background: #515050;
     border-radius: 10px;
     color: #fff;
     padding: 4px 12px;
+    max-width: 400px;
+}
+
+.value {
+    display: block;
+    border-bottom: 1px solid #c3c1c1;
 }
 
 /* キャンセル　ボタン　 */

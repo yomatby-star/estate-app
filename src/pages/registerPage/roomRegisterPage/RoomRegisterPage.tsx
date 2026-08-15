@@ -304,7 +304,7 @@ export default function RoomRegisterPage() {
       </div>
       <div className={styles.buttonField}>
         <button className={`${styles.button} ${styles.resetButton}`}>リセット</button>
-        <button className={styles.button} onClick={onSave} disabled={isSaving}>保存</button>
+        <button className={styles.button} onClick={onSave} disabled={isSaving}>{isSaving ? "保存中..." : "保存"}</button>
       </div>
 
       {isPreviewOpen && (
