@@ -5,7 +5,9 @@ import { ROUTES, REGISTER_NAV } from "../../../routes/rouets"
 import { ENDPOINT_URL } from "../../../api/mixin/mixin"
 import { Upload } from "lucide-react"
 import { getRoom } from "../../../api/getRooms/getRoom"
+import { getImages } from "../../../api/getProperties/getImages"
 import toast from "react-hot-toast"
+
 import styles from "./RoomRegisterPage.module.css"
 import stylesDialog from "../../../componets/confirmDialog/ResetDialog.module.css"
 
@@ -193,6 +195,28 @@ export default function RoomRegisterPage() {
         direction: room.direction ?? "",
         roomStatus: room.status ?? "",
       })
+
+      // console.log("ここね:", room.images)
+      const imageFiles = await Promise.all(
+        (room.images ?? []).map(async (image: any) => {
+          const imageData = await getImages(image.image_key)
+          // console.log("url::", imageData.url)
+          // console.log("型っす", image)
+          if(!imageData?.url) return null
+          const res = await fetch(imageData.url)
+          const blob = await res.blob()
+
+          return new File(
+            [blob],
+            image.file_name,
+            { type: image.content_type }
+          )
+        })
+      )
+
+      setImagesFile(
+        imageFiles.filter((file): file is File => file !== null)
+      )
     }
 
     fetchRoom()

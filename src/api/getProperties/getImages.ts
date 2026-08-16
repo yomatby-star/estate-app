@@ -1,4 +1,3 @@
-// ここから※フロントのauthFetchを作るところから開始する。
 import { authFetch } from "../authFetch";
 
 export const getImages = async (imageKey: string) => {
