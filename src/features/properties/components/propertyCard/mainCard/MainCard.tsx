@@ -21,12 +21,12 @@ export default function MainCard({ property }: Props) {
   //   { id: "buildingMansionType", label: "種別", value: property.common.mansionType ?? "-" },
   //   { id: "buildingStructure", label: "構造", value: property.common.structure ?? "-" },
   // ]
-  const buildingName = property.basic.name
-  const buildingAddr = property.common.addr
-  const buildingLocal = property.common.local
-  const buildingStation = property.common.station
-  const buildingMansionType = property.common.mansionType
-  const buildingStructure = property.common.structure
+  const buildingName = property.basic.name || "-" 
+  const buildingAddr = property.common.addr || "-"
+  const buildingLocal = property.common.local || "-"
+  const buildingStation = property.common.station || "-"
+  const buildingMansionType = property.common.mansionType || "-"
+  const buildingStructure = property.common.structure || "-"
 
   return (
     <Link to={path} className={styles.card}>

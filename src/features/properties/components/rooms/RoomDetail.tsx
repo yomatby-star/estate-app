@@ -24,17 +24,17 @@ export default function RoomDetail({ selectedRoom }: Props) {
         : ""
 
   const basic = [
-    { label: "部屋番号", value: `${selectedRoom?.roomNumber} 号室` },
-    { label: "タイプ", value: `${selectedRoom?.floorPlan}` },
-    { label: "専有面積", value: `${selectedRoom?.exclusiveArea} ㎡` },
-    { label: "階数", value: `${selectedRoom?.numberFloors} 階` },
+    { label: "部屋番号", value: `${selectedRoom?.roomNumber || "-"} 号室` },
+    { label: "タイプ", value: `${selectedRoom?.floorPlan || "-"}` },
+    { label: "専有面積", value: `${selectedRoom?.exclusiveArea || "-"} ㎡` },
+    { label: "階数", value: `${selectedRoom?.numberFloors || "-"} 階` },
   ]
 
   const conditions = [
-    { label: "賃料", value: selectedRoom?.rent, suffix: "/ 月"},
-    { label: "管理費", value: selectedRoom?.managementFee, suffix: "/ 月"},
-    { label: "礼金", value: selectedRoom?.keyMoney},
-    { label: "敷金", value: selectedRoom?.securityDeposit},
+    { label: "賃料", value: selectedRoom?.rent || "-", suffix: "/ 月"},
+    { label: "管理費", value: selectedRoom?.managementFee || "-", suffix: "/ 月"},
+    { label: "礼金", value: selectedRoom?.keyMoney || "-"},
+    { label: "敷金", value: selectedRoom?.securityDeposit || "-"},
   ]
 
   return (

@@ -27,7 +27,7 @@ export default function RoomRegisterDialog({ open, onClose, buildingName, buildi
     const roomFields = [
         { label: "部屋番号", key: "roomNumber", type: "text", suffix: " 号室" },
         { label: "家賃", key: "rent", type: "number", suffix: " 円" },
-        { label: "管理費", key: "securityDeposit", type: "number", suffix: " 円" },
+        { label: "管理費", key: "managementFee", type: "number", suffix: " 円" },
         { label: "敷金", key: "securityDeposit", type: "number", suffix: " 円" },
         { label: "礼金", key: "keyMoney", type: "number", suffix: " 円" },
         { label: "間取り", key: "floorPlan", type: "text", suffix: "" },
@@ -65,7 +65,7 @@ export default function RoomRegisterDialog({ open, onClose, buildingName, buildi
                             <strong className={styles.basicLabel}>基本情報</strong>
                             <div className={styles.labalField}>
                                 {roomFields.map((field) => {
-                                    const value = selectedRoom?.[field.key] ?? "-"
+                                    const value = selectedRoom?.[field.key] || "-"
                                     return (
                                         <div className={styles.mainContent}>
                                             <label className={styles.labal}>{field.label}</label>
