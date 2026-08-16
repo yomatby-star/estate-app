@@ -154,7 +154,8 @@ export default function RoomRegisterPage() {
       setImagesFile([])
       setEquipments([])
 
-      navigate(`${ROUTES.register}/${REGISTER_NAV.owner}?buildingId=${buildingId}`)
+      // navigate(`${ROUTES.register}/${REGISTER_NAV.owner}?buildingId=${buildingId}`)
+      navigate(`${ROUTES.property}/${buildingId}/${REGISTER_NAV.room}`)
 
     } catch (error) {
       console.log("通信エラー:", error)
