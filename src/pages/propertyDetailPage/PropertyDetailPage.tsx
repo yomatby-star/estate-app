@@ -1,7 +1,10 @@
 import { useOutletContext } from "react-router-dom"
 import { useEffect, useState } from "react"
+import type React from "react"
 import type { Property } from "../../mocks/properties/mock"
 import { getImages } from "../../api/getProperties/getImages"
+import { updateProperty } from "../../api/updateProperty/updateProperty"
+import toast from "react-hot-toast"
 import noImage from "../../assets/no_image.jpeg"
 import styles from "./PropertyDetailPage.module.css"
 
@@ -9,11 +12,13 @@ import styles from "./PropertyDetailPage.module.css"
 type OutletContext = {
   property: Property | undefined,
   isEditMode: boolean,
+  setProperties: React.Dispatch<React.SetStateAction<Property[]>>,
+  registerSave: (handler: (() => Promise<boolean>) | null) => void,
 }
 
 export default function PropertyDetailPage() {
   const [i, setI] = useState(0)
-  const { property, isEditMode } = useOutletContext<OutletContext>()
+  const { property, isEditMode, setProperties, registerSave } = useOutletContext<OutletContext>()
   // console.log("⭐️:", property)
   if (!property) {
     return <div>該当する物件がありません</div>
@@ -41,6 +46,55 @@ export default function PropertyDetailPage() {
       setForm(defaultForm)
     }
   }, [isEditMode])
+
+  const handleSave = async () => {
+    const payload = {
+      basic: {
+        name: form.name
+      },
+      common: {
+        addr: form.addr,
+        structure: form.structure,
+        mansionType: form.mansionType,
+        local: form.local,
+        station: form.station,
+        year: Number(form.year),
+        floors: Number(form.floors),
+        autoLock: form.autoLock,
+        gas: form.gas,
+        garbage: form.garbage,
+      }
+    }
+
+    try {
+      const res = await updateProperty(property.id, payload)
+
+      if (!res.ok) {
+        toast.error("更新に失敗しました")
+        return false
+      }
+
+      const data = await res.json()
+
+      setProperties((prev) => prev.map((p) =>
+        p.id === property.id
+          ? { ...p, basic: data.data.basic, common: data.data.common }
+          : p
+      ))
+
+      toast.success("物件情報を更新しました")
+      return true
+    } catch (error) {
+      console.log("通信エラー", error)
+      toast.error("通信エラーが発生しました")
+      return false
+    }
+  }
+
+  useEffect(() => {
+    registerSave(handleSave)
+    return () => registerSave(null)
+  }, [form, property.id])
 
   const commonRow = [
     {label: "住所", key: "addr", value: form.addr},

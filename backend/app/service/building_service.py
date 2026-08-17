@@ -36,3 +36,25 @@ def create_building(
   doc_ref.set(data)
 
   return data
+
+def update_building(
+    building_id: str,
+    request: PropertyCreateRequest,
+) -> dict:
+  db = get_firebase_client()
+  doc_ref = db.collection("buildings").document(building_id)
+
+  now = datetime.now(timezone.utc)
+
+  data = {
+    "basic": request.basic.model_dump(),
+    "common": request.common.model_dump(),
+    "updated_at": now,
+  }
+
+  doc_ref.update(data)
+
+  return {
+    "id": building_id,
+    **data,
+  }

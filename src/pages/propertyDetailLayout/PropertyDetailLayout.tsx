@@ -1,6 +1,7 @@
 import { NavLink, Outlet, useParams, useOutletContext, useLocation, useNavigate } from "react-router-dom"
 import { NAVE_ITEMS, PROPERTY_NAV, ROUTES } from "../../routes/rouets"
 import { useEffect, useState } from "react"
+import type React from "react"
 import type { Property, Room } from "../../mocks/properties/mock"
 import RoomRegisterDialog from "../../componets/confirmDialog/roomRegisterDialog"
 import { getRooms } from "../../api/getRooms/getRooms"
@@ -9,13 +10,34 @@ import styles from "./PropertyDetailLayout.module.css"
 export default function PropertyDetailLayout() {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { properties } = useOutletContext<{ properties: Property[] }>()
+  const { properties, setProperties } = useOutletContext<{
+    properties: Property[]
+    setProperties: React.Dispatch<React.SetStateAction<Property[]>>
+  }>()
   const location = useLocation()
   const isRoomPage = location.pathname === `${ROUTES.property}/${id}/${PROPERTY_NAV.room}`
   const property = properties.find((p) => p.id === id)
   const [isEditMode, setIsEditMode] = useState(false)
   const [isRoomDetailOpen, setIsRoomDetailOpen] = useState(false)
   const [rooms, setRooms] = useState<Room[]>([])
+  const [saveHandler, setSaveHandler] = useState<(() => Promise<boolean>) | null>(null)
+  const [isSaving, setIsSaving] = useState(false)
+
+  const registerSave = (handler: (() => Promise<boolean>) | null) => {
+    setSaveHandler(() => handler ?? null)
+  }
+
+  const handleSaveClick = async () => {
+    if (!saveHandler) return
+
+    setIsSaving(true)
+    const ok = await saveHandler()
+    setIsSaving(false)
+
+    if (ok) {
+      setIsEditMode(false)
+    }
+  }
 
   const tabItems = [
     { label: "建物詳細", to: `${ROUTES.property}/${id}`},
@@ -38,8 +60,8 @@ export default function PropertyDetailLayout() {
       <button type="button" className={styles.navItem} onClick={() => setIsEditMode(false)}>
         閉じる
       </button>
-      <button type="button" className={styles.navItem}>
-        保存
+      <button type="button" className={styles.navItem} onClick={handleSaveClick} disabled={isSaving}>
+        {isSaving ? "保存中..." : "保存"}
       </button>
     </>
   ) : (
@@ -91,7 +113,7 @@ export default function PropertyDetailLayout() {
       </div>
 
       <div className={styles.outletArea}>
-        <Outlet context={{ property, isEditMode }} />
+        <Outlet context={{ property, isEditMode, setProperties, registerSave }} />
       </div>
 
       <RoomRegisterDialog 
