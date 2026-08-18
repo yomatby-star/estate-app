@@ -7,6 +7,7 @@ import { updateProperty } from "../../api/updateProperty/updateProperty"
 import toast from "react-hot-toast"
 import noImage from "../../assets/no_image.jpeg"
 import styles from "./PropertyDetailPage.module.css"
+import dialogStyles from "../../componets/confirmDialog/ResetDialog.module.css"
 
 
 type OutletContext = {
@@ -19,10 +20,6 @@ type OutletContext = {
 export default function PropertyDetailPage() {
   const [i, setI] = useState(0)
   const { property, isEditMode, setProperties, registerSave } = useOutletContext<OutletContext>()
-  // console.log("⭐️:", property)
-  if (!property) {
-    return <div>該当する物件がありません</div>
-  }
 
   const defaultForm = {
     name: property?.basic.name ?? "",
@@ -40,14 +37,35 @@ export default function PropertyDetailPage() {
 
   const [form, setForm] = useState(defaultForm)
   const [photos, setPhotos] = useState<string[]>([])
-  
+  const [newImageFiles, setNewImageFiles] = useState<File[]>([])
+  const [removedImageKeys, setRemovedImageKeys] = useState<string[]>([])
+  const [isImageDialogOpen, setIsImageDialogOpen] = useState(false)
+
   useEffect(() => {
     if(!isEditMode) {
       setForm(defaultForm)
+      setNewImageFiles([])
+      setRemovedImageKeys([])
     }
   }, [isEditMode])
 
+  const toggleRemoveImage = (imageKey: string) => {
+    setRemovedImageKeys((prev) =>
+      prev.includes(imageKey)
+        ? prev.filter((key) => key !== imageKey)
+        : [...prev, imageKey]
+    )
+  }
+
+  const handleImageDialogCancel = () => {
+    setNewImageFiles([])
+    setRemovedImageKeys([])
+    setIsImageDialogOpen(false)
+  }
+
   const handleSave = async () => {
+    if (!property) return false
+
     const payload = {
       basic: {
         name: form.name
@@ -63,11 +81,12 @@ export default function PropertyDetailPage() {
         autoLock: form.autoLock,
         gas: form.gas,
         garbage: form.garbage,
-      }
+      },
+      removedImageKeys,
     }
 
     try {
-      const res = await updateProperty(property.id, payload)
+      const res = await updateProperty(property.id, payload, newImageFiles)
 
       if (!res.ok) {
         toast.error("更新に失敗しました")
@@ -78,9 +97,12 @@ export default function PropertyDetailPage() {
 
       setProperties((prev) => prev.map((p) =>
         p.id === property.id
-          ? { ...p, basic: data.data.basic, common: data.data.common }
+          ? { ...p, basic: data.data.basic, common: data.data.common, images: data.data.images }
           : p
       ))
+
+      setNewImageFiles([])
+      setRemovedImageKeys([])
 
       toast.success("物件情報を更新しました")
       return true
@@ -94,7 +116,7 @@ export default function PropertyDetailPage() {
   useEffect(() => {
     registerSave(handleSave)
     return () => registerSave(null)
-  }, [form, property.id])
+  }, [form, property?.id, removedImageKeys, newImageFiles])
 
   const commonRow = [
     {label: "住所", key: "addr", value: form.addr},
@@ -118,7 +140,7 @@ export default function PropertyDetailPage() {
   // photoの処理
   useEffect(() => {
     const fetchImages = async () => {
-      if (!property.images) return
+      if (!property?.images) return
 
       const urls = await Promise.all(
         property.images.map(async (image) => {
@@ -131,16 +153,24 @@ export default function PropertyDetailPage() {
     }
 
     fetchImages()
-  }, [property.images])
+  }, [property?.images])
 
   const hasImage = photos.length > 0
   const prevPhoto = () => setI((v) => (v - 1 + photos.length) % photos.length)
   const nextPhoto = () => setI((v) => (v + 1) % photos.length)
 
+  const visibleImageCount =
+    (property?.images ?? []).filter((image) => !removedImageKeys.includes(image.image_key)).length
+    + newImageFiles.length
+
   // Google Map の処理
-  const address = property.common.addr
+  const address = property?.common.addr ?? ""
   const q = encodeURIComponent(address);
   const mapSrc = `https://www.google.com/maps?hl=ja&q=${q}&output=embed`;
+
+  if (!property) {
+    return <div>該当する物件がありません</div>
+  }
 
   return (
     <div className={styles.stack}>
@@ -228,20 +258,100 @@ export default function PropertyDetailPage() {
               <button type="button" onClick={prevPhoto} className={`${styles.ImageButton} ${styles.imagePrev}`}>＜</button>
               <button type="button" onClick={nextPhoto} className={`${styles.ImageButton} ${styles.imageNext}`}>＞</button>
             </>
-          ) : 
+          ) :
             // <div className={styles.photo}>NO IMAGES</div>
             <img src={noImage} className={styles.photo} alt="建物写真" />
           }
+
+          {isEditMode && (
+            <button
+              type="button"
+              className={styles.countButton}
+              onClick={() => setIsImageDialogOpen(true)}
+            >
+              画像を編集：{visibleImageCount} 件
+            </button>
+          )}
         </div>
 
         <div className={styles.card}>
-          <iframe 
+          <iframe
             src={mapSrc}
             title="Google StreetView"
             className={styles.maps}
           />
         </div>
       </div>
+
+      {isImageDialogOpen && (
+        <div className={dialogStyles.overlay}>
+          <div className={dialogStyles.modal}>
+            <div className={styles.header}>
+              <h3>登録画像 <span className={styles.imagesCount}>{visibleImageCount}</span> 件</h3>
+              <div className={styles.headerButtons}>
+                <button type="button" className={styles.commonButton} onClick={handleImageDialogCancel}>キャンセル</button>
+                <button type="button" className={styles.commonButton} onClick={() => setIsImageDialogOpen(false)}>閉じる</button>
+              </div>
+            </div>
+
+            <div className={styles.dialogSection}>
+              <span className={styles.dialogSectionTitle}>登録済み画像</span>
+              <div className={styles.imageList}>
+                {property.images.map((image, index) => {
+                  const isMarkedForDeletion = removedImageKeys.includes(image.image_key)
+                  return (
+                    <div key={image.image_key} className={styles.imageThumb}>
+                      <img
+                        src={photos[index]}
+                        alt={image.file_name}
+                        className={`${styles.previewImage} ${isMarkedForDeletion ? styles.markedForDeletion : ""}`}
+                      />
+                      <button
+                        type="button"
+                        className={styles.deleteToggle}
+                        onClick={() => toggleRemoveImage(image.image_key)}
+                      >
+                        {isMarkedForDeletion ? "戻す" : "×"}
+                      </button>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+
+            <div className={styles.dialogSection}>
+              <span className={styles.dialogSectionTitle}>追加する画像</span>
+              <label htmlFor="building-image-upload">
+                <div className={styles.uploadArea}>
+                  <input
+                    id="building-image-upload"
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    className={styles.hiddenInput}
+                    onChange={(e) => {
+                      const files = Array.from(e.target.files ?? [])
+                      setNewImageFiles((prev) => [...prev, ...files])
+                    }}
+                  />
+                  <span className={styles.uploadLabel}>ファイルを選択</span>
+                  <span className={styles.inputText}>JPG, PNG, WEBP（最大5MB）</span>
+                </div>
+              </label>
+              <div className={styles.imageList}>
+                {newImageFiles.map((file, index) => (
+                  <img
+                    key={`${file.name}-${index}`}
+                    src={URL.createObjectURL(file)}
+                    alt={file.name}
+                    className={styles.previewImage}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

@@ -143,3 +143,126 @@
   width: 100%;
   height: 260px;
 }
+
+.countButton {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 2;
+  border: 1px solid rgb(70, 80, 137);
+  background: rgb(76, 97, 236);
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 16px;
+  cursor: pointer;
+}
+.countButton:hover {
+  filter: brightness(0.9);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  border-bottom: 2px solid #e5e5e5;
+  padding-bottom: 8px;
+}
+.headerButtons {
+  display: flex;
+  gap: 8px;
+}
+.imagesCount {
+  background: #8b5cf6;
+  color: #fff;
+  padding: 8px;
+  border-radius: 999px;
+}
+.commonButton {
+  padding: 4px 12px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background: #fff;
+  cursor: pointer;
+}
+.commonButton:hover {
+  filter: brightness(0.9);
+}
+
+.dialogSection {
+  display: grid;
+  gap: 8px;
+  margin-top: 16px;
+}
+.dialogSectionTitle {
+  font-size: 16px;
+  font-weight: 600;
+}
+.imageList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+  max-height: 240px;
+  overflow: auto;
+}
+.imageThumb {
+  position: relative;
+}
+.previewImage {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+.markedForDeletion {
+  opacity: 0.35;
+  border: 2px solid #d92626;
+}
+.deleteToggle {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  border: none;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 13px;
+  line-height: 1;
+}
+.deleteToggle:hover {
+  filter: brightness(1.3);
+}
+
+.uploadArea {
+  border: 2px dashed #8b5cf6;
+  border-radius: 12px;
+  background: #f0eeeeb8;
+  padding: 16px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 8px;
+  cursor: pointer;
+}
+.uploadArea:hover {
+  filter: brightness(0.9);
+}
+.uploadLabel {
+  font-weight: 600;
+  background: #8b5cf6;
+  color: #fff;
+  padding: 4px 16px;
+  border-radius: 12px;
+}
+.inputText {
+  font-size: 14px;
+  color: #828080;
+}
+.hiddenInput {
+  display: none;
+}

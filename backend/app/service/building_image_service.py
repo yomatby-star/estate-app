@@ -28,3 +28,13 @@ def upload_building_image(
     "file_name": file.filename,
     "content_type": file.content_type,
   }
+
+
+def delete_building_image(image_key: str) -> None:
+  client = get_b2_client()
+  backet_name = os.getenv("B2_BUCKET_NAME")
+
+  client.delete_object(
+    Bucket=backet_name,
+    Key=image_key,
+  )

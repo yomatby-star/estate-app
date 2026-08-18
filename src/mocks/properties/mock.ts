@@ -24,13 +24,11 @@ export type Property = {
     floors: string;
     year: string;
   };
-  images: [
-    {
-      content_type: string;
-      file_name: string;
-      image_key: string;
-    }
-  ],
+  images: {
+    content_type: string;
+    file_name: string;
+    image_key: string;
+  }[],
   imageUrl: string,
 }
 

@@ -2,7 +2,7 @@ import json
 import logging
 from fastapi import APIRouter, Depends, HTTPException, Form, File, UploadFile
 from app.dependencies.auth import get_current_user
-from app.schemas.property import PropertyCreateRequest
+from app.schemas.property import PropertyCreateRequest, PropertyUpdateRequest
 from app.service.building_service import create_building, update_building
 from app.service.building_image_service import upload_building_image
 
@@ -10,6 +10,7 @@ from app.service.building_image_service import upload_building_image
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/api/v1/buildingRegister", tags=["buildingRegister"])
+
 
 @router.post("")
 async def create_property_building(
@@ -38,16 +39,21 @@ async def create_property_building(
       detail="物件登録に失敗しました"
     )
 
+
 @router.put("/{building_id}")
 async def update_property_building(
   building_id: str,
-  request: PropertyCreateRequest,
+  payload: str = Form(...),
+  files: list[UploadFile] = File(default=[]),
   current_user: dict = Depends(get_current_user)
 ):
   try:
+    request = PropertyUpdateRequest(**json.loads(payload))
+
     data = update_building(
       building_id=building_id,
       request=request,
+      files=files,
     )
 
     return {

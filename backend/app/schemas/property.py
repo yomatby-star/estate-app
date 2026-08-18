@@ -18,3 +18,6 @@ class PropertyCommon(BaseModel):
 class PropertyCreateRequest(BaseModel):
   basic: PropertyBasic
   common: PropertyCommon
+
+class PropertyUpdateRequest(PropertyCreateRequest):
+  removedImageKeys: list[str] = Field(default_factory=list)

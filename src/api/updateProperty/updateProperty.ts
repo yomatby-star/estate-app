@@ -16,16 +16,20 @@ type UpdatePropertyPayload = {
         autoLock: string
         gas: string
         garbage: string
-    }
+    },
+    removedImageKeys: string[]
 }
 
-export const updateProperty = async (id: string, payload: UpdatePropertyPayload) => {
+export const updateProperty = async (id: string, payload: UpdatePropertyPayload, files: File[] = []) => {
     const PATH = `/api/v1/buildingRegister/${id}`
     const ENDPOINT = `${ENDPOINT_URL}${PATH}`
 
+    const formData = new FormData()
+    formData.append("payload", JSON.stringify(payload))
+    files.forEach((file) => formData.append("files", file))
+
     return await authFetch(ENDPOINT, {
         method: "put",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
+        body: formData
     })
 }
