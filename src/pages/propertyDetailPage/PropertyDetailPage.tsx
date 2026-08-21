@@ -148,10 +148,8 @@ export default function PropertyDetailPage() {
           return data.url
         })
       )
-
       setPhotos(urls)
     }
-
     fetchImages()
   }, [property?.images])
 
@@ -257,6 +255,7 @@ export default function PropertyDetailPage() {
               <img className={styles.photo} src={photos[i]} alt={`物件画像${i}`} />
               <button type="button" onClick={prevPhoto} className={`${styles.ImageButton} ${styles.imagePrev}`}>＜</button>
               <button type="button" onClick={nextPhoto} className={`${styles.ImageButton} ${styles.imageNext}`}>＞</button>
+              <div className={styles.imageCount}>{i + 1} / {photos.length}</div>
             </>
           ) :
             // <div className={styles.photo}>NO IMAGES</div>

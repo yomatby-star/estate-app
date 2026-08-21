@@ -14,9 +14,11 @@ def create_building(
     file: UploadFile | None = None,
 ) -> dict:
   db = get_firebase_client()
+  # 共通化できる
   doc_ref = db.collection("buildings").document()
 
   now = datetime.now(timezone.utc)
+  # 共通化できる
 
   images = []
 
@@ -48,9 +50,11 @@ def update_building(
     files: list[UploadFile] | None = None,
 ) -> dict:
   db = get_firebase_client()
+  # 共通化できる
   doc_ref = db.collection("buildings").document(building_id)
 
   now = datetime.now(timezone.utc)
+  # 共通化できる
 
   current_doc = doc_ref.get()
   current_images = current_doc.to_dict().get("images", []) if current_doc.exists else []

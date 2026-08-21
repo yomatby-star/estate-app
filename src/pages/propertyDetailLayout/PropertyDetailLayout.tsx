@@ -29,9 +29,11 @@ export default function PropertyDetailLayout() {
 
   const handleSaveClick = async () => {
     if (!saveHandler) return
+    console.log("saveHandler:", saveHandler)
 
     setIsSaving(true)
     const ok = await saveHandler()
+    console.log("ok:", ok)
     setIsSaving(false)
 
     if (ok) {

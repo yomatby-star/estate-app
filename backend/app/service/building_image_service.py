@@ -30,6 +30,7 @@ def upload_building_image(
   }
 
 
+# 画像削除
 def delete_building_image(image_key: str) -> None:
   client = get_b2_client()
   backet_name = os.getenv("B2_BUCKET_NAME")
