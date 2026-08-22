@@ -17,3 +17,8 @@ class RoomData(BaseModel):
 class RoomCreateRequest(BaseModel):
   building_id: str = Field(..., min_length=1)
   room: RoomData
+
+
+class RoomUpdateRequest(BaseModel):
+  room: RoomData
+  removedImageKeys: list[str] = Field(default_factory=list)

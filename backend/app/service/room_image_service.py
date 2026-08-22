@@ -27,3 +27,14 @@ def upload_room_image(
         "file_name": file.filename,
         "content_type": file.content_type,
     }
+
+
+# 画像削除
+def delete_room_image(image_key: str) -> None:
+    client = get_b2_client()
+    bucket_name = os.getenv("B2_BUCKET_NAME")
+
+    client.delete_object(
+        Bucket=bucket_name,
+        Key=image_key,
+    )
