@@ -1,17 +1,5 @@
 import styles from "./RoomDetail.module.css"
-
-type RoomForm = {
-  roomNumber: string
-  floorPlan: string
-  exclusiveArea: string
-  numberFloors: string
-  direction: string
-  status: string
-  rent: string
-  managementFee: string
-  keyMoney: string
-  securityDeposit: string
-}
+import type { RoomForm } from "../../../../mocks/properties/mock"
 
 type Props = {
   isEditMode: boolean
@@ -55,6 +43,7 @@ export default function RoomDetail({ isEditMode, form, onChangeField, equipments
     { label: "タイプ", key: "floorPlan", value: form.floorPlan, suffix: "" },
     { label: "専有面積", key: "exclusiveArea", value: form.exclusiveArea, suffix: "㎡" },
     { label: "階数", key: "numberFloors", value: form.numberFloors, suffix: "階" },
+    { label: "向き", key: "direction", value: form.direction, suffix: "" },
   ] as const
 
   const conditions = [
@@ -66,6 +55,7 @@ export default function RoomDetail({ isEditMode, form, onChangeField, equipments
 
   return (
     <div className={styles.stack}>
+      
       <div className={styles.card}>
         <div className={styles.basicHead}>
           <div className={styles.cardTitle}>基本情報</div>
@@ -96,7 +86,7 @@ export default function RoomDetail({ isEditMode, form, onChangeField, equipments
             )}
           </div>
         ))}
-        {isEditMode && (
+        {/* {isEditMode && (
           <div className={styles.basic}>
             <span className={styles.basicLabel}>向き</span>
             <input
@@ -105,8 +95,9 @@ export default function RoomDetail({ isEditMode, form, onChangeField, equipments
               onChange={(e) => onChangeField("direction", e.target.value)}
             />
           </div>
-        )}
+        )} */}
       </div>
+
       <div className={styles.card}>
         <div className={styles.basicHead}>
           <div className={styles.cardTitle}>設備</div>
@@ -130,6 +121,7 @@ export default function RoomDetail({ isEditMode, form, onChangeField, equipments
           )}
         </div>
       </div>
+
       <div className={styles.card}>
         <div className={styles.basicHead}>
           <div className={styles.cardTitle}>条件</div>
@@ -155,6 +147,7 @@ export default function RoomDetail({ isEditMode, form, onChangeField, equipments
           <button className={styles.registerButton}>この部屋に入居者を登録する</button>
         </div>
       </div>
+
     </div>
   )
 }

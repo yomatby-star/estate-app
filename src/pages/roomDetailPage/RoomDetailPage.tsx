@@ -1,5 +1,5 @@
 import { useOutletContext, useParams } from "react-router-dom"
-import type{ Property, Room } from "../../mocks/properties/mock"
+import type{ Property, Room, RoomForm } from "../../mocks/properties/mock"
 import RoomList from "../../features/properties/components/rooms/RoomList"
 import RoomDetail from "../../features/properties/components/rooms/RoomDetail"
 import RoomPhoto from "../../features/properties/components/rooms/RoomPhoto"
@@ -11,19 +11,6 @@ import styles from "./RoomDetailPage.module.css"
 type OutletContext = {
   property: Property | undefined
   isEditMode: boolean
-}
-
-type RoomForm = {
-  roomNumber: string
-  floorPlan: string
-  exclusiveArea: string
-  numberFloors: string
-  direction: string
-  status: string
-  rent: string
-  managementFee: string
-  keyMoney: string
-  securityDeposit: string
 }
 
 const buildRoomForm = (room: Room | null): RoomForm => ({
