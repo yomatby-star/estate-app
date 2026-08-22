@@ -20,6 +20,7 @@ app.add_middleware(
   allow_headers=["*"],
 )
 
+# 疎通テスト
 # @app.get("/")
 # def health_check():
 #   return {"message": "backend is running"}

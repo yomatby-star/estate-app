@@ -223,30 +223,9 @@ export default function PropertyDetailPage() {
               </div>
             ))}
           </div>
-            {/* <div className={`${styles.card} ${styles.vacantRoomField}`}> */}
-              {/* ここに設備表示する */}
-              {/* <div className={styles.row}>
-                <div className={styles.vacantTitle}>空室：</div>
-                  <div className={styles.roomStatusButtonField}>
-                    {vacantRoomStatus.map((room) => 
-                      <button key={room.roomNumber} className={styles.roomStatusButton}>
-                        {room.roomNumber}
-                      </button>
-                    )}
-                  </div>
-              </div>
-              <div className={styles.row}>
-                <span className={styles.closedTitle}>募集停止中：</span>
-                <div className={styles.roomStatusButtonField}>
-                  {closedRoomStatus.map((room) => 
-                    <button key={room.roomNumber} className={styles.roomStatusButton}>
-                      {room.roomNumber}
-                    </button>
-                  )}
-                </div>
-              </div> */}
-          </div>
+
         </div>
+      </div>
 
       <div className={styles.rightContent}>
         <div className={styles.card}>
@@ -258,7 +237,6 @@ export default function PropertyDetailPage() {
               <div className={styles.imageCount}>{i + 1} / {photos.length}</div>
             </>
           ) :
-            // <div className={styles.photo}>NO IMAGES</div>
             <img src={noImage} className={styles.photo} alt="建物写真" />
           }
 

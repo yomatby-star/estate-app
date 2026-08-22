@@ -1,63 +1,132 @@
-import type { Property, Room } from "../../../../mocks/properties/mock"
 import styles from "./RoomDetail.module.css"
 
-// type RoomStatus = Property["roomStatus"][number]
-
-type Props = {
-  selectedRoom: Room | null
+type RoomForm = {
+  roomNumber: string
+  floorPlan: string
+  exclusiveArea: string
+  numberFloors: string
+  direction: string
+  status: string
+  rent: string
+  managementFee: string
+  keyMoney: string
+  securityDeposit: string
 }
 
-export default function RoomDetail({ selectedRoom }: Props) {
+type Props = {
+  isEditMode: boolean
+  form: RoomForm
+  onChangeField: (key: keyof RoomForm, value: string) => void
+  equipments: string[]
+  onToggleEquipment: (equipment: string) => void
+}
 
-  const statusLabel = 
-    selectedRoom?.status === "vacant" 
-      ? "空室" 
-      : selectedRoom?.status === "closed" 
-        ? "募集停止" 
+const EQUIPMENTS = [
+  "バストイレ別",
+  "エアコン",
+  "オートロック",
+  "宅配ボックス",
+  "TVインターホン",
+  "室内洗濯機置き場",
+  "防犯カメラ",
+  "駐輪場",
+  "バルコニー",
+  "フローリング",
+]
+
+export default function RoomDetail({ isEditMode, form, onChangeField, equipments, onToggleEquipment }: Props) {
+
+  const statusLabel =
+    form.status === "vacant"
+      ? "空室"
+      : form.status === "closed"
+        ? "募集停止"
         : ""
 
-  const statusStyle = 
-    selectedRoom?.status === "vacant"
+  const statusStyle =
+    form.status === "vacant"
       ? styles.vacantStyle
-      : selectedRoom?.status === "closed"
+      : form.status === "closed"
         ? styles.closedStyle
         : ""
 
   const basic = [
-    { label: "部屋番号", value: `${selectedRoom?.roomNumber || "-"} 号室` },
-    { label: "タイプ", value: `${selectedRoom?.floorPlan || "-"}` },
-    { label: "専有面積", value: `${selectedRoom?.exclusiveArea || "-"} ㎡` },
-    { label: "階数", value: `${selectedRoom?.numberFloors || "-"} 階` },
-  ]
+    { label: "部屋番号", key: "roomNumber", value: form.roomNumber, suffix: "号室" },
+    { label: "タイプ", key: "floorPlan", value: form.floorPlan, suffix: "" },
+    { label: "専有面積", key: "exclusiveArea", value: form.exclusiveArea, suffix: "㎡" },
+    { label: "階数", key: "numberFloors", value: form.numberFloors, suffix: "階" },
+  ] as const
 
   const conditions = [
-    { label: "賃料", value: selectedRoom?.rent || "-", suffix: "/ 月"},
-    { label: "管理費", value: selectedRoom?.managementFee || "-", suffix: "/ 月"},
-    { label: "礼金", value: selectedRoom?.keyMoney || "-"},
-    { label: "敷金", value: selectedRoom?.securityDeposit || "-"},
-  ]
+    { label: "賃料", key: "rent", value: form.rent, suffix: "/ 月"},
+    { label: "管理費", key: "managementFee", value: form.managementFee, suffix: "/ 月"},
+    { label: "礼金", key: "keyMoney", value: form.keyMoney, suffix: ""},
+    { label: "敷金", key: "securityDeposit", value: form.securityDeposit, suffix: ""},
+  ] as const
 
   return (
     <div className={styles.stack}>
       <div className={styles.card}>
         <div className={styles.basicHead}>
           <div className={styles.cardTitle}>基本情報</div>
-          <div className={`${styles.statusField} ${statusStyle}`}>{statusLabel}</div>
+          {isEditMode ? (
+            <select
+              className={styles.statusSelect}
+              value={form.status}
+              onChange={(e) => onChangeField("status", e.target.value)}
+            >
+              <option value="vacant">空室</option>
+              <option value="closed">募集停止</option>
+            </select>
+          ) : (
+            <div className={`${styles.statusField} ${statusStyle}`}>{statusLabel}</div>
+          )}
         </div>
-        {basic.map(({ label, value }) => (
+        {basic.map(({ label, key, value, suffix }) => (
           <div key={label} className={styles.basic}>
             <span className={styles.basicLabel}>{label}</span>
-            <span className={styles.basicValue}>{value}</span>
+            {isEditMode ? (
+              <input
+                className={styles.editInput}
+                value={value}
+                onChange={(e) => onChangeField(key, e.target.value)}
+              />
+            ) : (
+              <span className={styles.basicValue}>{`${value || "-"}${suffix ? ` ${suffix}` : ""}`}</span>
+            )}
           </div>
         ))}
+        {isEditMode && (
+          <div className={styles.basic}>
+            <span className={styles.basicLabel}>向き</span>
+            <input
+              className={styles.editInput}
+              value={form.direction}
+              onChange={(e) => onChangeField("direction", e.target.value)}
+            />
+          </div>
+        )}
       </div>
       <div className={styles.card}>
         <div className={styles.basicHead}>
           <div className={styles.cardTitle}>設備</div>
         </div>
         <div className={styles.equipmentItemField}>
-          {selectedRoom?.equipments.map((i, idx) => 
-            <span key={idx} className={styles.equipmentItem}>{i}</span>
+          {isEditMode ? (
+            EQUIPMENTS.map((equipment) => (
+              <button
+                type="button"
+                key={equipment}
+                onClick={() => onToggleEquipment(equipment)}
+                className={equipments.includes(equipment) ? styles.equipmentActive : styles.equipment}
+              >
+                {equipment}
+              </button>
+            ))
+          ) : (
+            equipments.map((i, idx) =>
+              <span key={idx} className={styles.equipmentItem}>{i}</span>
+            )
           )}
         </div>
       </div>
@@ -66,11 +135,21 @@ export default function RoomDetail({ selectedRoom }: Props) {
           <div className={styles.cardTitle}>条件</div>
         </div>
         <div className={styles.conditionsField}>
-          {conditions.map(({ label, value, suffix }) => 
+          {conditions.map(({ label, key, value, suffix }) =>
             <div key={label} className={styles.basic}>
               <span className={styles.basicLabel}>{label}</span>
-              <span className={styles.basicValue}>{value}</span>
-              { suffix && <span>{suffix}</span>}
+              {isEditMode ? (
+                <input
+                  className={styles.editInput}
+                  value={value}
+                  onChange={(e) => onChangeField(key, e.target.value)}
+                />
+              ) : (
+                <>
+                  <span className={styles.basicValue}>{Number(value) ? value : "-"}</span>
+                  { suffix && <span>{suffix}</span>}
+                </>
+              )}
             </div>
           )}
           <button className={styles.registerButton}>この部屋に入居者を登録する</button>

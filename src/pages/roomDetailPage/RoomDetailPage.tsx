@@ -10,13 +10,59 @@ import styles from "./RoomDetailPage.module.css"
 
 type OutletContext = {
   property: Property | undefined
+  isEditMode: boolean
 }
+
+type RoomForm = {
+  roomNumber: string
+  floorPlan: string
+  exclusiveArea: string
+  numberFloors: string
+  direction: string
+  status: string
+  rent: string
+  managementFee: string
+  keyMoney: string
+  securityDeposit: string
+}
+
+const buildRoomForm = (room: Room | null): RoomForm => ({
+  roomNumber: room?.roomNumber ?? "",
+  floorPlan: room?.floorPlan ?? "",
+  exclusiveArea: room?.exclusiveArea ?? "",
+  numberFloors: room?.numberFloors ?? "",
+  direction: room?.direction ?? "",
+  status: room?.status ?? "",
+  rent: room ? String(room.rent) : "",
+  managementFee: room ? String(room.managementFee) : "",
+  keyMoney: room ? String(room.keyMoney) : "",
+  securityDeposit: room ? String(room.securityDeposit) : "",
+})
 
 export default function RoomDetailPage() {
   const { id } = useParams()
-  const { property } = useOutletContext<OutletContext>()
+  const { property, isEditMode } = useOutletContext<OutletContext>()
   const [rooms, setRooms] = useState<Room[]>([])
   const [selectedRoom, setSelectedRoom] = useState<Room | null>(null)
+  const [form, setForm] = useState<RoomForm>(() => buildRoomForm(null))
+  const [equipments, setEquipments] = useState<string[]>([])
+
+  useEffect(() => {
+    setForm(buildRoomForm(selectedRoom))
+    setEquipments(selectedRoom?.equipments ?? [])
+  }, [selectedRoom])
+
+  const handleChangeField = (key: keyof RoomForm, value: string) => {
+    setForm((prev) => ({ ...prev, [key]: value }))
+  }
+
+  const handleToggleEquipment = (equipment: string) => {
+    setEquipments((prev) =>
+      prev.includes(equipment)
+        ? prev.filter((item) => item !== equipment)
+        : [...prev, equipment]
+    )
+  }
 
   useEffect(() => {
     const fetchRoomProperties = async() => {
@@ -61,7 +107,13 @@ export default function RoomDetailPage() {
           buildingName={property?.basic.name ?? ""}
         />
         <div className={styles.mainContents}>
-          <RoomDetail selectedRoom={selectedRoom}/>
+          <RoomDetail
+            isEditMode={isEditMode}
+            form={form}
+            onChangeField={handleChangeField}
+            equipments={equipments}
+            onToggleEquipment={handleToggleEquipment}
+          />
           <RoomPhoto selectedRoom={selectedRoom}/>
         </div>
       </div>
