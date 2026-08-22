@@ -33,10 +33,14 @@ export default function RoomDetailPage() {
   const [selectedRoom, setSelectedRoom] = useState<Room | null>(null)
   const [form, setForm] = useState<RoomForm>(() => buildRoomForm(null))
   const [equipments, setEquipments] = useState<string[]>([])
+  const [newImageFiles, setNewImageFiles] = useState<File[]>([])
+  const [removedImageKeys, setRemovedImageKeys] = useState<string[]>([])
 
   useEffect(() => {
     setForm(buildRoomForm(selectedRoom))
     setEquipments(selectedRoom?.equipments ?? [])
+    setNewImageFiles([])
+    setRemovedImageKeys([])
   }, [selectedRoom])
 
   const handleChangeField = (key: keyof RoomForm, value: string) => {
@@ -49,6 +53,23 @@ export default function RoomDetailPage() {
         ? prev.filter((item) => item !== equipment)
         : [...prev, equipment]
     )
+  }
+
+  const handleAddImageFiles = (files: File[]) => {
+    setNewImageFiles((prev) => [...prev, ...files])
+  }
+
+  const handleToggleRemoveImage = (imageKey: string) => {
+    setRemovedImageKeys((prev) =>
+      prev.includes(imageKey)
+        ? prev.filter((key) => key !== imageKey)
+        : [...prev, imageKey]
+    )
+  }
+
+  const handleCancelImageEdit = () => {
+    setNewImageFiles([])
+    setRemovedImageKeys([])
   }
 
   useEffect(() => {
@@ -101,7 +122,15 @@ export default function RoomDetailPage() {
             equipments={equipments}
             onToggleEquipment={handleToggleEquipment}
           />
-          <RoomPhoto selectedRoom={selectedRoom}/>
+          <RoomPhoto
+            selectedRoom={selectedRoom}
+            isEditMode={isEditMode}
+            newImageFiles={newImageFiles}
+            removedImageKeys={removedImageKeys}
+            onAddImageFiles={handleAddImageFiles}
+            onToggleRemoveImage={handleToggleRemoveImage}
+            onCancelImageEdit={handleCancelImageEdit}
+          />
         </div>
       </div>
   )
