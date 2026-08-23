@@ -46,6 +46,7 @@ async def create_property_room(
     )
 
 
+# 部屋詳細更新処理
 @router.put("/{room_id}")
 async def update_property_room(
   room_id: str,

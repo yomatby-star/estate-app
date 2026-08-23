@@ -69,25 +69,26 @@ def update_room(
   db = get_firebase_client()
   room_ref = db.collection("rooms").document(room_id)
   now = datetime.now(timezone.utc)
-
+  # 共通化できる
   current_doc = room_ref.get()
   current_data = current_doc.to_dict() if current_doc.exists else {}
   current_images = current_data.get("images", [])
   building_id = current_data.get("building_id")
+  room_number = request.room.roomNumber
 
   # 重複部屋チェック（自分自身は除外）
   duplicate_docs = [
     doc for doc in (
       db.collection("rooms")
       .where("building_id", "==", building_id)
-      .where("roomNumber", "==", request.room.roomNumber)
+      .where("roomNumber", "==", room_number)
       .stream()
     )
     if doc.id != room_id
   ]
 
   if duplicate_docs:
-    raise HTTPException(status_code=400, detail=f"部屋番号：{request.room.roomNumber} はすでに登録されています。")
+    raise HTTPException(status_code=400, detail=f"部屋番号：{room_number} はすでに登録されています。")
 
   removed_keys = set(request.removedImageKeys)
   images = []
