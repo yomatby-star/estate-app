@@ -46,6 +46,15 @@ export default function RoomDetailPage() {
     setRemovedImageKeys([])
   }, [selectedRoom])
 
+  useEffect(() => {
+    if (!isEditMode) {
+      setForm(buildRoomForm(selectedRoom))
+      setEquipments(selectedRoom?.equipments ?? [])
+      setNewImageFiles([])
+      setRemovedImageKeys([])
+    }
+  }, [isEditMode])
+
   const handleChangeField = (key: keyof RoomForm, value: string) => {
     setForm((prev) => ({ ...prev, [key]: value }))
   }
