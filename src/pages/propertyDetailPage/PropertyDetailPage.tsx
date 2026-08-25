@@ -15,11 +15,12 @@ type OutletContext = {
   isEditMode: boolean,
   setProperties: React.Dispatch<React.SetStateAction<Property[]>>,
   registerSave: (handler: (() => Promise<boolean>) | null) => void,
+  registerCanSave: (value: boolean) => void,
 }
 
 export default function PropertyDetailPage() {
   const [i, setI] = useState(0)
-  const { property, isEditMode, setProperties, registerSave } = useOutletContext<OutletContext>()
+  const { property, isEditMode, setProperties, registerSave, registerCanSave } = useOutletContext<OutletContext>()
 
   const defaultForm = {
     name: property?.basic.name ?? "",
@@ -113,10 +114,20 @@ export default function PropertyDetailPage() {
     }
   }
 
+  const hasFormChanges = Object.keys(defaultForm).some(
+    (key) => String(form[key as keyof typeof form] ?? "") !== String(defaultForm[key as keyof typeof defaultForm] ?? "")
+  )
+  const hasChanges = hasFormChanges || newImageFiles.length > 0 || removedImageKeys.length > 0
+
   useEffect(() => {
     registerSave(handleSave)
     return () => registerSave(null)
   }, [form, property?.id, removedImageKeys, newImageFiles])
+
+  useEffect(() => {
+    registerCanSave(hasChanges)
+    return () => registerCanSave(true)
+  }, [hasChanges])
 
   const commonRow = [
     {label: "住所", key: "addr", value: form.addr},

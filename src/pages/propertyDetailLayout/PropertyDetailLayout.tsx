@@ -22,9 +22,14 @@ export default function PropertyDetailLayout() {
   const [rooms, setRooms] = useState<Room[]>([])
   const [saveHandler, setSaveHandler] = useState<(() => Promise<boolean>) | null>(null)
   const [isSaving, setIsSaving] = useState(false)
+  const [canSave, setCanSave] = useState(true)
 
   const registerSave = (handler: (() => Promise<boolean>) | null) => {
     setSaveHandler(() => handler ?? null)
+  }
+
+  const registerCanSave = (value: boolean) => {
+    setCanSave(value)
   }
 
   const handleSaveClick = async () => {
@@ -62,7 +67,7 @@ export default function PropertyDetailLayout() {
       <button type="button" className={styles.navItem} onClick={() => setIsEditMode(false)}>
         閉じる
       </button>
-      <button type="button" className={styles.navItem} onClick={handleSaveClick} disabled={isSaving}>
+      <button type="button" className={styles.navItem} onClick={handleSaveClick} disabled={isSaving || !canSave}>
         {isSaving ? "保存中..." : "保存"}
       </button>
     </>
@@ -115,7 +120,7 @@ export default function PropertyDetailLayout() {
       </div>
 
       <div className={styles.outletArea}>
-        <Outlet context={{ property, isEditMode, setProperties, registerSave }} />
+        <Outlet context={{ property, isEditMode, setProperties, registerSave, registerCanSave }} />
       </div>
 
       <RoomRegisterDialog 
